@@ -14,6 +14,7 @@ import OtpPage from './Pages/OtpPage';
 import HomePage from './Pages/HomePage';
 import CallDetailsPage from './Pages/CallDetailsPage';
 import FingerPrintScreen from './Pages/FingerPrintScreen';
+import DrawerContentPage from './Pages/DrawerContentPage'
 
 
 const Stack = createStackNavigator();
@@ -83,7 +84,7 @@ const StackScreen = ({ navigation }) => (
 function AppStack() {
     return (
         <NavigationContainer>
-            <Drawer.Navigator >
+            <Drawer.Navigator drawerContent={props => <DrawerContentPage {...props}/>}>
                 <Drawer.Screen name="Team Assist" component={StackScreen}
                 />
             </Drawer.Navigator>
@@ -95,7 +96,7 @@ function AppStack() {
 export class HeaderComponent extends Component {
     render() {
         return (
-            <Text style={{ color: BaseColor.ColorWhite, fontSize: 20 }}>Team Assist</Text>
+            <Text style={{ color: BaseColor.ColorWhite, fontSize: 20,fontFamily:'Poppins-Regular.tff' }}>Team Assist</Text>
         );
     }
 }

@@ -117,6 +117,7 @@ export default class HomePage extends Component {
                     <FlatList
                         data={task}
                         style={{ margin: 20 }}
+                        keyExtractor={(item,index) => item.call_log_id}
                         renderItem={({ item }) =>
                             <TouchableOpacity onPress={() => this.checkCallId(item.call_log_id)}>
                                 <Card style={styles.flatListCard}>
@@ -181,7 +182,8 @@ const styles = StyleSheet.create({
         color: BaseColor.ColorWhite,
         fontSize: 15,
         marginLeft: 20,
-        marginTop: 5
+        marginTop: 5,
+        fontFamily:'Poppins-Regular.tff'
     },
     showCallsView: {
         flexDirection: 'row',
@@ -207,7 +209,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: BaseColor.ColorWhite,
         fontSize: 16,
-        padding: 5
+        padding: 5,
+        fontFamily:'Poppins-Regular.tff'
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
@@ -239,6 +242,7 @@ const styles = StyleSheet.create({
         marginTop: 14,
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold',
-        fontSize: 17
+        fontSize: 17,
+        fontFamily:'Poppins-Regular.tff'
     }
 })
