@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, SafeAreaView, StyleSheet, View, TouchableOpacity, Alert, BackHandler } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, View, TouchableOpacity, Alert, BackHandler,Switch } from 'react-native';
 import { Card, CardItem, Header, Item, Left, Text, DatePicker } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import Icon from 'react-native-vector-icons/EvilIcons'
@@ -31,7 +31,8 @@ export default class HomePage extends Component {
             year: '',
             task: '',
             login_userID: '',
-            empty: false
+            empty: false,
+            switchValue: true
         }
 
     }
@@ -39,7 +40,14 @@ export default class HomePage extends Component {
     componentDidMount() {
         this.showTodayCalls();
         this.setTaskDateTime();
+        
     }
+
+
+    // checkFingerprint = async() =>{
+    //     let value = await AsyncStorage.getItem('fingerprint');
+    //     alert(value)
+    // }
 
     setTaskDateTime = () => {
         var date = new Date().getDate();
@@ -85,6 +93,11 @@ export default class HomePage extends Component {
         })
     }
 
+    // showValue = (value) =>{
+    //     this.setState({switchValue: value})
+    //     alert(value);
+    // }
+
     render() {
         var task = this.state.task;
         return (
@@ -112,6 +125,11 @@ export default class HomePage extends Component {
                 </View>
 
                 <Item style={{ marginTop: 30 }}></Item>
+
+                {/* <Switch
+                value={this.state.switchValue}
+                onValueChange={(switchValue) => this.showValue(switchValue)}
+                /> */}
 
                 <View>
                     <FlatList

@@ -8,7 +8,6 @@ export default class App extends Component{
     return(
       <Root>
         <AppStack/>
-        <FingerPrintScreen/>
       </Root>
     );
   }

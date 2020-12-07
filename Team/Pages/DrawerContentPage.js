@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Switch } from 'react-native';
 import {
     Caption,
     Drawer,
@@ -10,39 +10,87 @@ import {
     DrawerItem
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Finger from 'react-native-vector-icons/MaterialCommunityIcons'
 import PoweredBy from '../assets/PoweredBy';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BaseColor from '../Core/BaseTheme';
 
 
 export default class DrawerContentPage extends Component {
     constructor(props) {
         super(props)
-        this.state={
-            username:'',
-            email:''
+        this.state = {
+            username: '',
+            email: '',
+            switchValue: Boolean,
+            iconName: 'fingerprint-off',
+            fingerPrintText: 'Enable Fingerprint unlock'
+        }
+        
+    }
+
+    
+
+    componentDidMount() {
+        this.getUserDetail();
+        this.initialToggle();
+    }
+
+    getUserDetail = async () => {
+        let value = await AsyncStorage.getItem('username');
+        let email = await AsyncStorage.getItem('useremailID')
+        //let fingerprintValue = await AsyncStorage.getItem('fingerprint');
+        this.setState({
+            username: value,
+            email: email,
+            //switchValue : fingerprintValue
+        })
+        console.log(this.state.username);
+        //console.log(this.state.switchValue)
+    }
+
+    // signOut = async() => {
+    //     await AsyncStorage.removeItem('username');
+
+    //     this.props.navigation.navigate({
+    //         name : 'WelcomePage'
+    //     })
+    // }
+
+    signOut = () => {
+        this.props.navigation.navigate({
+            name: 'FingerPrintScreen'
+        })
+    }
+
+    //initial state of toggle
+    initialToggle = () => {
+        if (this.state.switchValue === false) {
+            this.setState({ iconName: 'fingerprint-off' })
+            this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
+        } else if (this.state.switchValue === true) {
+            this.setState({ iconName: 'fingerprint' })
+            this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
         }
     }
 
-    signOut = async() => {
-        await AsyncStorage.removeItem('username');
 
-        this.props.navigation.navigate({
-            name : 'WelcomePage'
-        })
-    }
+    // for toggle control of finger print
 
-    componentDidMount(){
-        this.getUserDetail();
-    }
+    showValue = (value) => {
+        this.setState({ switchValue: value })
+        if (value === false) {
+            //alert(value)
+            this.setState({ iconName: 'fingerprint-off' })
+            this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
+            //await AsyncStorage.setItem('fingerprint','false');
+        } else if (value === true) {
+            this.setState({ iconName: 'fingerprint' })
+            this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
+            //await AsyncStorage.setItem('fingerprint','true');
+            // alert(value)
+        }
 
-    getUserDetail = async() => {
-        let value = await AsyncStorage.getItem('username');
-        let email = await AsyncStorage.getItem('useremailID')
-        this.setState({
-            username: value,
-            email : email
-        })
-        console.log(this.state.username);
     }
     render(props) {
         return (
@@ -70,6 +118,19 @@ export default class DrawerContentPage extends Component {
                                 label="Sign Out"
                                 onPress={() => this.signOut()}
                             />
+                            <View style={{ flexDirection: 'row' }}>
+                                <Finger
+                                    name={this.state.iconName}
+                                    size={32}
+                                    style={{ marginLeft: 20 }}
+                                />
+                                <Text style={{ marginLeft: 8, marginTop: 5, marginRight: 10, color: BaseColor.CommonTextColor, fontFamily: 'Poppins-Regular.ttf' }}>{this.state.fingerPrintText}</Text>
+                                <Switch
+                                    value={this.state.switchValue}
+                                    onValueChange={(switchValue) => this.showValue(switchValue)}
+                                />
+                            </View>
+
                         </Drawer.Section>
                     </View>
                 </DrawerContentScrollView>
@@ -87,7 +148,7 @@ export default class DrawerContentPage extends Component {
                     <View style={{ flexDirection: 'row' }}>
                         <Text>Powered by </Text>
                         <PoweredBy />
-                        <Text style={{marginLeft:80}}>ver: 1.0</Text>
+                        <Text style={{ marginLeft: 80 }}>ver: 1.0</Text>
                     </View>
                 </Drawer.Section>
             </View>
@@ -124,7 +185,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderTopColor: '#f4f4f4',
         borderTopWidth: 1,
-        marginLeft:10
+        marginLeft: 10
     },
     preference: {
         flexDirection: 'row',
