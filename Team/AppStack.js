@@ -14,7 +14,10 @@ import OtpPage from './Pages/OtpPage';
 import HomePage from './Pages/HomePage';
 import CallDetailsPage from './Pages/CallDetailsPage';
 import FingerPrintScreen from './Pages/FingerPrintScreen';
-import DrawerContentPage from './Pages/DrawerContentPage'
+import DrawerContentPage from './Pages/DrawerContentPage';
+import CallClosedPage from './Pages/CallClosedPage';
+import CallReshedulePage from './Pages/CallReshedulePage';
+import CallPendingPage from './Pages/CallPendingPage';
 
 
 const Stack = createStackNavigator();
@@ -76,6 +79,66 @@ const StackScreen = ({ navigation }) => (
         />
         <Stack.Screen
         name="FingerPrintScreen" component={FingerPrintScreen}
+        />
+        <Stack.Screen
+        name="CallClosedPage" component={CallClosedPage}
+        options={{
+            headerLeft: () => (
+                <Back
+                    name='left'
+                    size={30}
+                    style={{ margin: 10 }}
+                    color={BaseColor.ColorWhite}
+                    onPress={() =>navigation.goBack()}
+                />
+            ),
+            headerTitle: () => (
+                <ClosedCallHeader/>
+            ),
+            headerStyle:{
+                backgroundColor: BaseColor.CommonTextColor
+            }
+        }}
+        />
+        <Stack.Screen 
+        name="CallReshedulePage" component={CallReshedulePage}
+        options={{
+            headerLeft: () => (
+                <Back
+                    name='left'
+                    size={30}
+                    style={{ margin: 10 }}
+                    color={BaseColor.ColorWhite}
+                    onPress={() =>navigation.goBack()}
+                />
+            ),
+            headerTitle: () => (
+                <SheduleCallHeader/>
+            ),
+            headerStyle:{
+                backgroundColor: BaseColor.CommonTextColor
+            }
+        }}
+        />
+        <Stack.Screen 
+        name="CallPendingPage" component={CallPendingPage}
+        options={{
+            headerLeft: () => (
+                <Back
+                    name='left'
+                    size={30}
+                    style={{ margin: 10 }}
+                    color={BaseColor.ColorWhite}
+                    onPress={() =>navigation.goBack()}
+                />
+            ),
+            headerTitle: () => (
+                <PendingCall/>
+            ),
+            headerStyle:{
+                backgroundColor: BaseColor.CommonTextColor
+            }
+        }}
         />
     </Stack.Navigator>
 )

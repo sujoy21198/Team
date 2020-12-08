@@ -48,6 +48,18 @@ export default class CallDetailsPage extends Component {
 
         //console.log(this.state.details)
     }
+
+    goToReshedulePage = () => {
+        this.props.navigation.navigate({
+            name: 'CallReshedulePage',
+            params: {
+                call_log_id: this.state.call_log_id,
+                number_of_today_call : this.state.number_of_today_call,
+                number_of_open_call : this.state.number_of_open_call,
+                number_of_pending_call : this.state.number_of_pending_call
+            }
+        })
+    }
     render() {
         var details = this.state.details;
         var issues = [];
@@ -76,7 +88,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.accountTextBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.log_account}</Text>
+                        <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:20 }}>{details.log_account}</Text>
                     </View>
 
                     <View style={styles.accountTextView}>
@@ -84,7 +96,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.accountTextBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.log_contract_name}</Text>
+                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily:'Poppins-Regular.ttf',fontSize:17 }}>{details.log_contract_name}</Text>
                     </View>
 
                     <View style={styles.accountTextView}>
@@ -94,7 +106,7 @@ export default class CallDetailsPage extends Component {
                     <View style={styles.calldetailsBox}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{width:300}}>
-                            <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.log_address}</Text>
+                            <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:17 }}>{details.log_address}</Text>
                             </View>
                             <Icon
                                 name="location"
@@ -109,7 +121,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.calldetailsBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.call_details}</Text>
+                        <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:17}}>{details.call_details}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -119,7 +131,7 @@ export default class CallDetailsPage extends Component {
                             </View>
 
                             <View style={styles.rowTextBox}>
-                                <Text style={{ marginLeft: 10, marginTop: 10 }}>Account</Text>
+                                <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:17}}>Account</Text>
                             </View>
                         </View>
 
@@ -174,7 +186,7 @@ export default class CallDetailsPage extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CallClosedPage')}>
+                        <TouchableOpacity onPress={() => this.goToReshedulePage()}>
                             <View style={styles.resheduleCallStyle}>
                                 <Text style={styles.resheduleCallText}>Reshedule call</Text>
                             </View>
@@ -219,12 +231,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: BaseColor.ColorWhite,
         fontSize: 16,
-        padding: 5
+        padding: 5,
+        marginTop:9
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
         fontSize: 16,
-        padding: 5
+        padding: 5,
+        marginTop:9
     },
     itemCount: {
         backgroundColor: "#e6e6e6",

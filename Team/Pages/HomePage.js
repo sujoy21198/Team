@@ -6,7 +6,8 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
-import EmptyPage from './EmptyPage'
+import EmptyPage from './EmptyPage';
+import CustomIndicator from '../Core/CustomIndicator';
 
 
 const data = [
@@ -37,7 +38,8 @@ export default class HomePage extends Component {
             switchValue: true,
             number_of_today_call: '',
             number_of_pending_call: '',
-            number_of_open_call: ''
+            number_of_open_call: '',
+            isLoading: true
         }
 
     }
@@ -52,7 +54,7 @@ export default class HomePage extends Component {
     setfingerprint = async () => {
         let value = await AsyncStorage.getItem('bool');
         if (value === 'true') {
-            FingerprintScanner.authenticate({ title: "Login" })
+            FingerprintScanner.authenticate({ title: "Please use fingerprint"})
         }
         //alert(value)
     }
@@ -90,6 +92,7 @@ export default class HomePage extends Component {
         var number_of_today_call;
         var number_of_pending_call;
         var number_of_open_call;
+        var flag = false;
 
         empty = this.state.empty;
 
@@ -98,11 +101,18 @@ export default class HomePage extends Component {
         await axios.post("http://teamassist.websteptech.co.uk/api/gettodaytask", {
             login_userID: id
         }).then(function (response) {
-            console.log(response.data.today_log_list)
+            console.log(response.data.status)
 
             if(response.data.today_log_list === 'No Log Found'){
                 //console.log("hihihihihihihhhi")
                 empty = true
+            }
+
+            if (response.data.status === "success") {
+                flag = true;
+            } else {
+                alert(response.data.message)
+                flag = true;
             }
 
             taskArray = response.data.today_log_list;
@@ -123,6 +133,10 @@ export default class HomePage extends Component {
             number_of_open_call: number_of_open_call,
             empty : empty
         })
+
+        if (flag === true) {
+            this.setState({ isLoading: false })
+        }
     }
 
     // showValue = (value) =>{
@@ -143,7 +157,9 @@ export default class HomePage extends Component {
         }
         return (
             <SafeAreaView style={styles.container}>
+                
                 <View style={styles.secondContainer}>
+                    
                     <Text style={styles.secondContainerText}>Today's Tasks</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.datetimeText}>{this.state.date}/{this.state.month}/{this.state.year}</Text>
@@ -155,18 +171,19 @@ export default class HomePage extends Component {
                         />
                     </View>
                 </View>
-
+                
                 <View style={styles.showCallsView}>
                     <View style={styles.totalCalls}>
                         <Text style={styles.totalCallsText}>Today's number of calls - {this.state.number_of_today_call}</Text>
                     </View>
                     <View style={styles.unreadCalls}>
+                        <View style={{marginRight:8}}>
                         <Text style={styles.unreadCallsText}>Open calls - {this.state.number_of_open_call} | Pending calls - {this.state.number_of_pending_call}</Text>
+                        </View>
                     </View>
                 </View>
 
                 <Item style={{ marginTop: 30 }}></Item>
-
                 {/* <Switch
                 value={this.state.switchValue}
                 onValueChange={(switchValue) => this.showValue(switchValue)}
@@ -213,6 +230,8 @@ export default class HomePage extends Component {
 
                     />
                 </View>
+
+                <CustomIndicator IsLoading={this.state.isLoading} />
 
                 <View style={{ margin: 30 }}></View>
 
@@ -267,12 +286,14 @@ const styles = StyleSheet.create({
         color: BaseColor.ColorWhite,
         fontSize: 16,
         padding: 5,
-        fontFamily: 'Poppins-Regular.tff'
+        fontFamily: 'Poppins-Regular.tff',
+        marginTop:9
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
         fontSize: 16,
-        padding: 5
+        padding: 5,
+        marginTop:9,
     },
     flatListCard: {
         width: 350,
