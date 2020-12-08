@@ -36,6 +36,11 @@ export default class DrawerContentPage extends Component {
         this.initialToggle();
     }
 
+
+    setToggleState = async()=>{
+        
+    }
+
     getUserDetail = async () => {
         let value = await AsyncStorage.getItem('username');
         let email = await AsyncStorage.getItem('useremailID')

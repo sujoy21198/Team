@@ -198,21 +198,20 @@ export default class CallDetailsPage extends Component {
 const styles = StyleSheet.create({
     showCallsView: {
         flexDirection: 'row',
-        width: 355,
+        width: 450,
         height: 50,
         backgroundColor: '#000',
         alignSelf: 'flex-start',
         borderRadius: 5,
         marginTop: 20,
-        marginLeft: 20
     },
     totalCalls: {
-        width: 175,
+        width: 200,
         height: 50,
         backgroundColor: BaseColor.SecondContainer
     },
     unreadCalls: {
-        width: 180,
+        width: 225,
         height: 50,
         backgroundColor: BaseColor.CommonTextColor
     },
@@ -295,7 +294,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: BaseColor.ColorWhite,
-        fontFamily: 'Poppins-Light',
+        fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
         marginTop: 6
     },
@@ -326,7 +325,7 @@ const styles = StyleSheet.create({
     },
     resheduleCallText: {
         color: BaseColor.ColorWhite,
-        fontFamily: 'Poppins-Light',
+        fontFamily: 'Poppins-Regular.tff',
         alignSelf: 'center',
         marginTop: 6,
         fontSize: 15,

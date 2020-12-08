@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     textStyle: {
-        fontFamily: 'Poppins-Light',
+        fontFamily: 'Poppins-Regular',
         fontSize: 25,
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold'
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: BaseColor.ColorWhite,
-        fontFamily: 'Poppins-Light',
+        fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
         marginTop: 6
     }

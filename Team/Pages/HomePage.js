@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
+import EmptyPage from './EmptyPage'
 
 
 const data = [
@@ -90,17 +91,26 @@ export default class HomePage extends Component {
     showTodayCalls = async () => {
 
         var id;
+        var empty;
         var taskArray = [];
         var number_of_today_call;
         var number_of_pending_call;
         var number_of_open_call;
 
-        id = await AsyncStorage.getItem('login_userID')
+        empty = this.state.empty;
 
+        id = await AsyncStorage.getItem('login_userID')
+        
         await axios.post("http://teamassist.websteptech.co.uk/api/gettodaytask", {
             login_userID: id
         }).then(function (response) {
-            console.log(response.data)
+            console.log(response.data.today_log_list)
+
+            if(response.data.today_log_list === 'No Log Found'){
+                //console.log("hihihihihihihhhi")
+                empty = true
+            }
+
             taskArray = response.data.today_log_list;
 
             number_of_today_call = response.data.number_of_today_call;
@@ -116,7 +126,8 @@ export default class HomePage extends Component {
             task: taskArray,
             number_of_today_call: number_of_today_call,
             number_of_pending_call: number_of_pending_call,
-            number_of_open_call: number_of_open_call
+            number_of_open_call: number_of_open_call,
+            empty : empty
         })
     }
 
@@ -127,6 +138,15 @@ export default class HomePage extends Component {
 
     render() {
         var task = this.state.task;
+        //console.log(task)
+        var empty = this.state.empty;
+        console.log(task)
+        console.log(task)
+        if (empty === true) {
+            return (
+                <EmptyPage />
+            )
+        }
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.secondContainer}>
@@ -232,21 +252,19 @@ const styles = StyleSheet.create({
     },
     showCallsView: {
         flexDirection: 'row',
-        width: 350,
+        width: 450,
         height: 50,
         backgroundColor: '#000',
-        alignSelf: 'flex-start',
         borderRadius: 5,
         marginTop: 20,
-        marginLeft: 20
     },
     totalCalls: {
-        width: 175,
+        width: 200,
         height: 50,
         backgroundColor: BaseColor.SecondContainer
     },
     unreadCalls: {
-        width: 175,
+        width: 225,
         height: 50,
         backgroundColor: BaseColor.CommonTextColor
     },
