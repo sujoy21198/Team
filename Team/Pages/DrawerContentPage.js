@@ -39,29 +39,27 @@ export default class DrawerContentPage extends Component {
     getUserDetail = async () => {
         let value = await AsyncStorage.getItem('username');
         let email = await AsyncStorage.getItem('useremailID')
-        //let fingerprintValue = await AsyncStorage.getItem('fingerprint');
         this.setState({
             username: value,
             email: email,
-            //switchValue : fingerprintValue
         })
         console.log(this.state.username);
         //console.log(this.state.switchValue)
     }
 
-    // signOut = async() => {
-    //     await AsyncStorage.removeItem('username');
+    signOut = async() => {
+        await AsyncStorage.removeItem('username');
 
-    //     this.props.navigation.navigate({
-    //         name : 'WelcomePage'
-    //     })
-    // }
-
-    signOut = () => {
         this.props.navigation.navigate({
-            name: 'FingerPrintScreen'
+            name : 'WelcomePage'
         })
     }
+
+    // signOut = () => {
+    //     this.props.navigation.navigate({
+    //         name: 'FingerPrintScreen'
+    //     })
+    // }
 
     //initial state of toggle
     initialToggle = () => {

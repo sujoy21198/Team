@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { FlatList, SafeAreaView, StyleSheet, View, TouchableOpacity, Alert, BackHandler,Switch } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, View, TouchableOpacity, Alert, BackHandler, Switch } from 'react-native';
 import { Card, CardItem, Header, Item, Left, Text, DatePicker } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import FingerprintScanner from 'react-native-fingerprint-scanner';
 
 
 const data = [
@@ -32,7 +33,10 @@ export default class HomePage extends Component {
             task: '',
             login_userID: '',
             empty: false,
-            switchValue: true
+            switchValue: true,
+            number_of_today_call: '',
+            number_of_pending_call: '',
+            number_of_open_call: ''
         }
 
     }
@@ -40,7 +44,16 @@ export default class HomePage extends Component {
     componentDidMount() {
         this.showTodayCalls();
         this.setTaskDateTime();
-        
+        this.setfingerprint();
+
+    }
+
+    setfingerprint = async () => {
+        let value = await AsyncStorage.getItem('username');
+        if (value) {
+            FingerprintScanner.authenticate({ title: "Login" })
+        }
+        //alert(value)
     }
 
 
@@ -61,11 +74,14 @@ export default class HomePage extends Component {
     }
 
     checkCallId = (value) => {
-        
+
         this.props.navigation.navigate({
             name: 'CallDetailsPage',
             params: {
-                call_log_id: value
+                call_log_id: value,
+                number_of_today_call : this.state.number_of_today_call,
+                number_of_open_call : this.state.number_of_open_call,
+                number_of_pending_call : this.state.number_of_pending_call
             }
         })
         //alert(value);
@@ -75,6 +91,10 @@ export default class HomePage extends Component {
 
         var id;
         var taskArray = [];
+        var number_of_today_call;
+        var number_of_pending_call;
+        var number_of_open_call;
+
         id = await AsyncStorage.getItem('login_userID')
 
         await axios.post("http://teamassist.websteptech.co.uk/api/gettodaytask", {
@@ -82,6 +102,10 @@ export default class HomePage extends Component {
         }).then(function (response) {
             console.log(response.data)
             taskArray = response.data.today_log_list;
+
+            number_of_today_call = response.data.number_of_today_call;
+            number_of_pending_call = response.data.number_of_pending_call;
+            number_of_open_call = response.data.number_of_open_call;
             //console.log(taskArray.map(i => i.call_log_id))
         }).catch(function (error) {
             console.log(error);
@@ -89,7 +113,10 @@ export default class HomePage extends Component {
 
 
         this.setState({
-            task: taskArray
+            task: taskArray,
+            number_of_today_call: number_of_today_call,
+            number_of_pending_call: number_of_pending_call,
+            number_of_open_call: number_of_open_call
         })
     }
 
@@ -117,10 +144,10 @@ export default class HomePage extends Component {
 
                 <View style={styles.showCallsView}>
                     <View style={styles.totalCalls}>
-                        <Text style={styles.totalCallsText}>Today's total number of calls - 15</Text>
+                        <Text style={styles.totalCallsText}>Today's number of calls - {this.state.number_of_today_call}</Text>
                     </View>
                     <View style={styles.unreadCalls}>
-                        <Text style={styles.unreadCallsText}>Open calls - 09 | Pending calls - 06</Text>
+                        <Text style={styles.unreadCallsText}>Open calls - {this.state.number_of_open_call} | Pending calls - {this.state.number_of_pending_call}</Text>
                     </View>
                 </View>
 
@@ -135,7 +162,7 @@ export default class HomePage extends Component {
                     <FlatList
                         data={task}
                         style={{ margin: 20 }}
-                        keyExtractor={(item,index) => item.call_log_id}
+                        keyExtractor={(item, index) => item.call_log_id}
                         renderItem={({ item }) =>
                             <TouchableOpacity onPress={() => this.checkCallId(item.call_log_id)}>
                                 <Card style={styles.flatListCard}>
@@ -169,11 +196,11 @@ export default class HomePage extends Component {
                                 </Card>
                             </TouchableOpacity>
                         }
-                        
+
                     />
                 </View>
 
-                <View style={{margin:30}}></View>
+                <View style={{ margin: 30 }}></View>
 
             </SafeAreaView>
         );
@@ -201,7 +228,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: 20,
         marginTop: 5,
-        fontFamily:'Poppins-Regular.tff'
+        fontFamily: 'Poppins-Regular.tff'
     },
     showCallsView: {
         flexDirection: 'row',
@@ -228,7 +255,7 @@ const styles = StyleSheet.create({
         color: BaseColor.ColorWhite,
         fontSize: 16,
         padding: 5,
-        fontFamily:'Poppins-Regular.tff'
+        fontFamily: 'Poppins-Regular.tff'
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
@@ -240,7 +267,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 20,
         height: 130,
-        borderRadius:7
+        borderRadius: 7
     },
     itemCount: {
         backgroundColor: "#e6e6e6",
@@ -261,6 +288,6 @@ const styles = StyleSheet.create({
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold',
         fontSize: 17,
-        fontFamily:'Poppins-Regular.tff'
+        fontFamily: 'Poppins-Regular.tff'
     }
 })

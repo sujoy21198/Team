@@ -44,6 +44,7 @@ export default class OtpPage extends Component {
         this.setState({ isLoading: true })
         var flag = false;
         var redirect = false;
+        var finger = false;
         var otp = this.state.otp;
         if (!otp || otp.length != 4) {
             alert("plz enter 4 digit code")
@@ -61,7 +62,6 @@ export default class OtpPage extends Component {
             AsyncStorage.setItem("username", response.data.username);
             AsyncStorage.setItem("useremailID", response.data.useremailID);
             AsyncStorage.setItem('login_userID', JSON.stringify(response.data.login_userID))
-
         }).catch(function (error) {
             console.log(error);
         });

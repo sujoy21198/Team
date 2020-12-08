@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Item, Text, Input, Picker, Footer, Button } from 'native-base';
+import { Item, Text, Input,Footer, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import BaseColor from '../Core/BaseTheme';
 import axios from 'axios';
@@ -11,9 +11,15 @@ export default class CallDetailsPage extends Component {
         this.state={
             call_log_id:'',
             details: '',
-            issues: []
+            issues: [],
+            number_of_today_call: '',
+            number_of_pending_call: '',
+            number_of_open_call: ''
         }
         this.state.call_log_id = this.props.route.params.call_log_id;
+        this.state.number_of_today_call = this.props.route.params.number_of_today_call;
+        this.state.number_of_pending_call = this.props.route.params.number_of_pending_call;
+        this.state.number_of_open_call = this.props.route.params.number_of_open_call;
         // alert(this.state.call_log_id+"hihihi");
     }
 
@@ -51,10 +57,10 @@ export default class CallDetailsPage extends Component {
                 <ScrollView>
                     <View style={styles.showCallsView}>
                         <View style={styles.totalCalls}>
-                            <Text style={styles.totalCallsText}>Today's total number of calls - 15</Text>
+                            <Text style={styles.totalCallsText}>Today's number of calls - {this.state.number_of_today_call}</Text>
                         </View>
                         <View style={styles.unreadCalls}>
-                            <Text style={styles.unreadCallsText}>Open calls - 09 | Pending calls - 06</Text>
+                            <Text style={styles.unreadCallsText}>Open calls - {this.state.number_of_open_call} | Pending calls - {this.state.number_of_pending_call}</Text>
                         </View>
                     </View>
 
@@ -87,11 +93,13 @@ export default class CallDetailsPage extends Component {
 
                     <View style={styles.calldetailsBox}>
                         <View style={{ flexDirection: 'row' }}>
+                            <View style={{width:300}}>
                             <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.log_address}</Text>
+                            </View>
                             <Icon
                                 name="location"
                                 size={30}
-                                style={{ marginLeft: 130, marginTop: 30 }}
+                                style={{ marginTop: 30 }}
                             />
                         </View>
                     </View>
