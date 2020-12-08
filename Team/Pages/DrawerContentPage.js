@@ -14,6 +14,7 @@ import Finger from 'react-native-vector-icons/MaterialCommunityIcons'
 import PoweredBy from '../assets/PoweredBy';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BaseColor from '../Core/BaseTheme';
+import FingerprintScanner from 'react-native-fingerprint-scanner';
 
 
 export default class DrawerContentPage extends Component {
@@ -22,7 +23,7 @@ export default class DrawerContentPage extends Component {
         this.state = {
             username: '',
             email: '',
-            switchValue: Boolean,
+            switchValue: '',
             iconName: 'fingerprint-off',
             fingerPrintText: 'Enable Fingerprint unlock'
         }
@@ -33,13 +34,27 @@ export default class DrawerContentPage extends Component {
 
     componentDidMount() {
         this.getUserDetail();
-        this.initialToggle();
+        this.checkToggleStateLast();
     }
 
 
-    setToggleState = async()=>{
-        
+    checkToggleStateLast = async() =>{
+        let test = await AsyncStorage.getItem('bool')
+        console.log(test)
+        if(test === 'true'){
+            this.state.switchValue = true
+            this.setState({ iconName: 'fingerprint' })
+            this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
+        }else{
+            this.state.switchValue = false
+            this.setState({ iconName: 'fingerprint-off' })
+            this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
+        }
     }
+
+
+
+   
 
     getUserDetail = async () => {
         let value = await AsyncStorage.getItem('username');
@@ -67,31 +82,33 @@ export default class DrawerContentPage extends Component {
     // }
 
     //initial state of toggle
-    initialToggle = () => {
-        if (this.state.switchValue === false) {
-            this.setState({ iconName: 'fingerprint-off' })
-            this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
-        } else if (this.state.switchValue === true) {
-            this.setState({ iconName: 'fingerprint' })
-            this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
-        }
-    }
+    // initialToggle = () => {
+    //     if (this.state.switchValue === false) {
+    //         this.setState({ iconName: 'fingerprint-off' })
+    //         this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
+    //     } else if (this.state.switchValue === true) {
+    //         this.setState({ iconName: 'fingerprint' })
+    //         this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
+    //     }
+    // }
 
 
     // for toggle control of finger print
 
     showValue = (value) => {
-        this.setState({ switchValue: value })
+        // this.setState({ switchValue: value })
+        this.state.switchValue = value
+        //alert(this.state.switchValue)
         if (value === false) {
             //alert(value)
             this.setState({ iconName: 'fingerprint-off' })
             this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
-            //await AsyncStorage.setItem('fingerprint','false');
+            AsyncStorage.setItem('bool','false')
+            
         } else if (value === true) {
             this.setState({ iconName: 'fingerprint' })
             this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
-            //await AsyncStorage.setItem('fingerprint','true');
-            // alert(value)
+            AsyncStorage.setItem('bool','true')
         }
 
     }

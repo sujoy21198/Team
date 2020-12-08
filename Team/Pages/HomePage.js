@@ -50,18 +50,12 @@ export default class HomePage extends Component {
     }
 
     setfingerprint = async () => {
-        let value = await AsyncStorage.getItem('username');
-        if (value) {
+        let value = await AsyncStorage.getItem('bool');
+        if (value === 'true') {
             FingerprintScanner.authenticate({ title: "Login" })
         }
         //alert(value)
     }
-
-
-    // checkFingerprint = async() =>{
-    //     let value = await AsyncStorage.getItem('fingerprint');
-    //     alert(value)
-    // }
 
     setTaskDateTime = () => {
         var date = new Date().getDate();
