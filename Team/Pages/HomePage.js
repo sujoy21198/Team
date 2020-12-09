@@ -39,7 +39,8 @@ export default class HomePage extends Component {
             number_of_today_call: '',
             number_of_pending_call: '',
             number_of_open_call: '',
-            isLoading: true
+            isLoading: true,
+            isFetching:false
         }
 
     }
@@ -54,7 +55,15 @@ export default class HomePage extends Component {
     setfingerprint = async () => {
         let value = await AsyncStorage.getItem('bool');
         if (value === 'true') {
-            FingerprintScanner.authenticate({ title: "Please use fingerprint"})
+            FingerprintScanner.authenticate({
+                title: "Please use fingerprint", 
+                cancelButton:'exit'
+            }).then(success =>{
+                console.log("Authentication successful")
+            }).catch(error => {
+                BackHandler.exitApp();
+            })
+
         }
         //alert(value)
     }
@@ -136,6 +145,7 @@ export default class HomePage extends Component {
 
         if (flag === true) {
             this.setState({ isLoading: false })
+            this.setState({isFetching : false})
         }
     }
 
@@ -143,6 +153,10 @@ export default class HomePage extends Component {
     //     this.setState({switchValue: value})
     //     alert(value);
     // }
+
+    onRefresh = () => {
+        this.setState({ isFetching: true }, function() { this.showTodayCalls() });
+    }
 
     render() {
         var task = this.state.task;
@@ -193,6 +207,8 @@ export default class HomePage extends Component {
                     <FlatList
                         data={task}
                         style={{ margin: 20 }}
+                        onRefresh={() => this.onRefresh()}
+                        refreshing={this.state.isFetching}
                         keyExtractor={(item, index) => item.call_log_id}
                         renderItem={({ item }) =>
                             <TouchableOpacity onPress={() => this.checkCallId(item.call_log_id)}>
