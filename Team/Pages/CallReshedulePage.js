@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, StyleSheet, Alert } from 'react-native';
-import { Button, Text, DatePicker, Input} from 'native-base';
+import { SafeAreaView, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { Button, Text, DatePicker, Input } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Clock from 'react-native-vector-icons/SimpleLineIcons';
 import Arrow from 'react-native-vector-icons/SimpleLineIcons';
 import axios from 'axios';
+import Dialog from "react-native-dialog";
 
 
 
@@ -23,8 +24,10 @@ export default class CallReshedulePage extends Component {
             number_of_pending_call: '',
             number_of_open_call: '',
             datePicker: '',
-            time:'',
-            reason:''
+            reason: '',
+            show: false,
+            hour: '',
+            min: ''
 
         }
         this.state.call_log_id = this.props.route.params.call_log_id;
@@ -114,7 +117,7 @@ export default class CallReshedulePage extends Component {
         Alert.prompt(
             "Enter Password",
             "Enter your password to claim your $1.5B in lottery winnings",
-            
+
         )
     }
 
@@ -122,23 +125,23 @@ export default class CallReshedulePage extends Component {
         this.state.show = true
     }
 
-    submit = async() =>{
+    submit = async () => {
 
         var redirect = false;
 
-        await axios.post("http://teamassist.websteptech.co.uk/api/reshedulecall	",{
-            call_log_id : this.state.call_log_id,
+        await axios.post("http://teamassist.websteptech.co.uk/api/reshedulecall	", {
+            call_log_id: this.state.call_log_id,
             reshedule_date: this.state.datePicker,
-            reshedule_time : this.state.time,
+            reshedule_time: this.state.hour+":"+this.state.min,
             reshedule_cause: this.state.reason
-        }).then(function (response){
+        }).then(function (response) {
             console.log(response.data)
             redirect = true;
-        }).catch(function(error){
+        }).catch(function (error) {
             console.log(error)
         })
 
-        if(redirect === true){
+        if (redirect === true) {
             this.props.navigation.navigate({
                 name: 'HomePage'
             })
@@ -176,7 +179,7 @@ export default class CallReshedulePage extends Component {
                                 animationType={"fade"}
                                 androidMode={"default"}
                                 onDateChange={(date) => this.chooseDate(date)}
-                                
+
                             />
                         </View>
 
@@ -196,10 +199,35 @@ export default class CallReshedulePage extends Component {
 
                 <View style={styles.timeBox}>
                     <View style={{ flexDirection: 'row' }}>
-                            <Input
+                        <TouchableOpacity onPress={() => this.setState({ show: true })}>
+                            <View style={{ width: 280 }}>
+                                <Text style={{marginLeft:10,marginTop:10}}>{this.state.hour}:{this.state.min}</Text>
+                                <Dialog.Container visible={this.state.show} style={{ borderRadius: 10 }}>
+                                    <Dialog.Title>Time in 24 hrs</Dialog.Title>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Dialog.Input placeholder='hour'
+                                            style={{ color: '#000' }}
+                                            maxLength={2}
+                                            onChangeText={(text) => { this.setState({ hour: text }) }}
+                                        ></Dialog.Input>
+                                        <Dialog.Description>:</Dialog.Description>
+                                        <Dialog.Input placeholder='minutes'
+                                            style={{ color: '#000' }}
+                                            maxLength={2}
+                                            onChangeText={(text) => { this.setState({ min: text }) }}
+                                        ></Dialog.Input>
+                                    </View>
+                                    <Dialog.Button label='OK' onPress={() => this.setState({ show: false })} />
+                                    <Dialog.Button label='Cancel' onPress={() => this.setState({ show: false })} />
+                                </Dialog.Container>
+                            </View>
+                        </TouchableOpacity>
+
+                        {/* <Input
                             placeholder='24 hr clock time'
                             onChangeText={(text)=>{this.setState({time: text})}}
-                            />
+                            /> */}
+
                         <Icon
                             name='clock'
                             size={30}
@@ -225,8 +253,8 @@ export default class CallReshedulePage extends Component {
                         /> */}
                         <Input
                             placeholder='give a reason'
-                            onChangeText={(text)=>{this.setState({reason: text})}}
-                            />
+                            onChangeText={(text) => { this.setState({ reason: text }) }}
+                        />
                     </View>
                 </View>
                 <Button style={{
@@ -314,7 +342,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         height: 50
     },
-    timeBox:{
+    timeBox: {
         marginLeft: 30,
         borderColor: BaseColor.BorderColor,
         borderWidth: 2,
