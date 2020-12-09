@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, StyleSheet } from 'react-native';
-import { Button, Text,DatePicker } from 'native-base';
+import { SafeAreaView, View, StyleSheet, Alert } from 'react-native';
+import { Button, Text, DatePicker, Input} from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Clock from 'react-native-vector-icons/SimpleLineIcons';
 import Arrow from 'react-native-vector-icons/SimpleLineIcons';
+import axios from 'axios';
+
+
 
 export default class CallReshedulePage extends Component {
 
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            call_log_id:'',
-            date:'',
-            month:'',
-            year:'',
+        this.state = {
+            call_log_id: '',
+            date: '',
+            month: '',
+            year: '',
             number_of_today_call: '',
             number_of_pending_call: '',
             number_of_open_call: '',
-            datePicker:''
+            datePicker: '',
+            time:'',
+            reason:''
+
         }
         this.state.call_log_id = this.props.route.params.call_log_id;
         this.state.number_of_today_call = this.props.route.params.number_of_today_call;
@@ -27,7 +33,7 @@ export default class CallReshedulePage extends Component {
         this.state.number_of_open_call = this.props.route.params.number_of_open_call;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setTaskDateTime();
     }
 
@@ -46,42 +52,42 @@ export default class CallReshedulePage extends Component {
 
 
     getMonthName = (month) => {
-        if(month === 1){
+        if (month === 1) {
             //alert("January")
-            this.setState({month: "January"})
-        }else if(month === 2){
+            this.setState({ month: "January" })
+        } else if (month === 2) {
             //alert("February")
-            this.setState({month: "February"})
-        }else if(month === 3){
+            this.setState({ month: "February" })
+        } else if (month === 3) {
             //alert("March")
-            this.setState({month: "March"})
-        }else if(month === 4){
+            this.setState({ month: "March" })
+        } else if (month === 4) {
             //alert("April")
-            this.setState({month: "April"})
-        }else if(month === 5){
+            this.setState({ month: "April" })
+        } else if (month === 5) {
             //alert("May")
-            this.setState({month: "May"})
-        }else if(month === 6){
+            this.setState({ month: "May" })
+        } else if (month === 6) {
             //alert("June")
-            this.setState({month: "June"})
-        }else if(month === 7){
+            this.setState({ month: "June" })
+        } else if (month === 7) {
             //alert("July")
-            this.setState({month: "July"})
-        }else if(month === 8){
+            this.setState({ month: "July" })
+        } else if (month === 8) {
             //alert("August")
-            this.setState({month: "August"})
-        }else if(month === 9){
+            this.setState({ month: "August" })
+        } else if (month === 9) {
             //alert("September")
-            this.setState({month: "September"})
-        }else if(month === 10){
+            this.setState({ month: "September" })
+        } else if (month === 10) {
             //alert("October")
-            this.setState({month: "October"})
-        }else if(month === 11){
+            this.setState({ month: "October" })
+        } else if (month === 11) {
             //alert("November")
-            this.setState({month: "November"})
-        }else if(month === 12){
+            this.setState({ month: "November" })
+        } else if (month === 12) {
             //alert("December")
-            this.setState({month: "December"})
+            this.setState({ month: "December" })
         }
     }
 
@@ -89,8 +95,54 @@ export default class CallReshedulePage extends Component {
     chooseDate = (date) => {
         //.split('T')[0]
         var test = JSON.stringify(date);
-        var format = test.toString().replace('"','').split('T')[0]
-        this.setState({datePicker: format})
+        var format = test.toString().replace('"', '').split('T')[0]
+        this.setState({ datePicker: format })
+    }
+
+    customAlert = () => {
+        // Alert.alert(
+        //     'Alert Title',
+        //     'My Alert Msg',
+        //     [
+        //         {
+        //             text : 'Ask me later',
+        //             onPress:()=> console.log("hi"),
+        //         }
+        //     ]
+        // )
+
+        Alert.prompt(
+            "Enter Password",
+            "Enter your password to claim your $1.5B in lottery winnings",
+            
+        )
+    }
+
+    showTimer = () => {
+        this.state.show = true
+    }
+
+    submit = async() =>{
+
+        var redirect = false;
+
+        await axios.post("http://teamassist.websteptech.co.uk/api/reshedulecall	",{
+            call_log_id : this.state.call_log_id,
+            reshedule_date: this.state.datePicker,
+            reshedule_time : this.state.time,
+            reshedule_cause: this.state.reason
+        }).then(function (response){
+            console.log(response.data)
+            redirect = true;
+        }).catch(function(error){
+            console.log(error)
+        })
+
+        if(redirect === true){
+            this.props.navigation.navigate({
+                name: 'HomePage'
+            })
+        }
     }
 
     render() {
@@ -119,21 +171,20 @@ export default class CallReshedulePage extends Component {
                 <View style={styles.accountTextBox}>
                     <View style={{ flexDirection: 'row' }}>
                         {/* <Text style={{ marginLeft: 10, marginTop: 10 }}>Spare parts changed</Text> */}
-                        <View style={{width:280}}>
-                        <DatePicker
-                        animationType={"fade"}
-                        androidMode={"default"}
-                        onDateChange={(date) => this.chooseDate(date)}
-                        
-                        />
+                        <View style={{ width: 280 }}>
+                            <DatePicker
+                                animationType={"fade"}
+                                androidMode={"default"}
+                                onDateChange={(date) => this.chooseDate(date)}
+                                
+                            />
                         </View>
-                        
+
                         <Icon
                             name='calendar'
                             size={30}
-                            style={{ marginLeft:10, marginTop:10 }}
+                            style={{ marginLeft: 10, marginTop: 10 }}
                             color={BaseColor.CommonTextColor}
-                            onPress={() => { navigation.openDrawer() }}
                         />
                     </View>
                 </View>
@@ -143,16 +194,17 @@ export default class CallReshedulePage extends Component {
                     <Text style={styles.accountText}>Enter time</Text>
                 </View>
 
-                <View style={styles.accountTextBox}>
+                <View style={styles.timeBox}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10 }}>Time & day</Text>
-                        
+                            <Input
+                            placeholder='24 hr clock time'
+                            onChangeText={(text)=>{this.setState({time: text})}}
+                            />
                         <Icon
                             name='clock'
                             size={30}
-                            style={{ marginLeft:210, marginTop:10 }}
+                            style={{ marginLeft: 10, marginTop: 10 }}
                             color={BaseColor.CommonTextColor}
-                            onPress={() => { navigation.openDrawer() }}
                         />
                     </View>
                 </View>
@@ -163,21 +215,25 @@ export default class CallReshedulePage extends Component {
 
                 <View style={styles.accountTextBox}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10 }}>Select a reason</Text>
+                        {/* <Text style={{ marginLeft: 10, marginTop: 10 }}>Select a reason</Text>
                         <Arrow
                             name='arrow-down'
                             size={25}
-                            style={{ marginLeft:180, marginTop:10 }}
+                            style={{ marginLeft: 180, marginTop: 10 }}
                             color={BaseColor.CommonTextColor}
                             onPress={() => { navigation.openDrawer() }}
-                        />
+                        /> */}
+                        <Input
+                            placeholder='give a reason'
+                            onChangeText={(text)=>{this.setState({reason: text})}}
+                            />
                     </View>
                 </View>
                 <Button style={{
-                    alignSelf:'flex-end',marginTop:300,width:150,marginRight:30,backgroundColor:BaseColor.CommonTextColor,borderRadius:5
-                    }}
-                    onPress={() => this.props.navigation.navigate('CallPendingPage')}
-                    >
+                    alignSelf: 'flex-end', marginTop: 300, width: 150, marginRight: 30, backgroundColor: BaseColor.CommonTextColor, borderRadius: 5
+                }}
+                    onPress={() => this.submit()}
+                >
                     <Text>Save and Submit</Text>
                 </Button>
 
@@ -258,4 +314,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         height: 50
     },
+    timeBox:{
+        marginLeft: 30,
+        borderColor: BaseColor.BorderColor,
+        borderWidth: 2,
+        borderRadius: 5,
+        width: 340,
+        marginTop: 10,
+        height: 50
+    }
 })
