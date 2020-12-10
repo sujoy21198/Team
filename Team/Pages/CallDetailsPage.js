@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Item, Text, Input,Footer, Button } from 'native-base';
+import { Item, Text, Input,Footer, Button,Picker } from 'native-base';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import BaseColor from '../Core/BaseTheme';
 import axios from 'axios';
@@ -148,18 +148,22 @@ export default class CallDetailsPage extends Component {
 
 
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <View>
+                        <View style={{width: 180}}>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Primary issues</Text>
                             </View>
-                            
+                            <View style={styles.rowTextBox}>
+                                <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.primary_issue}</Text>
+                            </View>
                         </View>
 
-                        <View>
+                        <View style={{marginLeft:10,width: 180}}>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Secondary issues</Text>
                             </View>
-
+                            <View style={styles.rowTextBox}>
+                                <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.secondary_issue}</Text>
+                            </View>
                             
                         </View>
                     </View>

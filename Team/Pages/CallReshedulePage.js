@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { Button, Text, DatePicker, Input } from 'native-base';
+import { Button, Text, DatePicker, Input, Picker } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Clock from 'react-native-vector-icons/SimpleLineIcons';
 import Arrow from 'react-native-vector-icons/SimpleLineIcons';
 import axios from 'axios';
 import Dialog from "react-native-dialog";
+
 
 
 
@@ -132,7 +133,7 @@ export default class CallReshedulePage extends Component {
         await axios.post("http://teamassist.websteptech.co.uk/api/reshedulecall	", {
             call_log_id: this.state.call_log_id,
             reshedule_date: this.state.datePicker,
-            reshedule_time: this.state.hour+":"+this.state.min,
+            reshedule_time: this.state.hour + ":" + this.state.min,
             reshedule_cause: this.state.reason
         }).then(function (response) {
             console.log(response.data)
@@ -146,6 +147,10 @@ export default class CallReshedulePage extends Component {
                 name: 'HomePage'
             })
         }
+    }
+
+    picker = (value) => {
+        alert(value)
     }
 
     render() {
@@ -201,7 +206,7 @@ export default class CallReshedulePage extends Component {
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => this.setState({ show: true })}>
                             <View style={{ width: 280 }}>
-                                <Text style={{marginLeft:10,marginTop:10}}>{this.state.hour}:{this.state.min}</Text>
+                                <Text style={{ marginLeft: 10, marginTop: 10 }}>{this.state.hour}:{this.state.min}</Text>
                                 <Dialog.Container visible={this.state.show} style={{ borderRadius: 10 }}>
                                     <Dialog.Title>Time in 24 hrs</Dialog.Title>
                                     <View style={{ flexDirection: 'row' }}>
@@ -251,6 +256,16 @@ export default class CallReshedulePage extends Component {
                             color={BaseColor.CommonTextColor}
                             onPress={() => { navigation.openDrawer() }}
                         /> */}
+                        {/* <Picker
+                        //selectedValue={(value)=> {this.picker(value)}}
+                        onValueChange={(value)=> this.picker(value)}
+                        >
+                            <Picker.Item label="Wallet" value="key0" />
+                            <Picker.Item label="ATM Card" value="key1" />
+                            <Picker.Item label="Debit Card" value="key2" />
+                            <Picker.Item label="Credit Card" value="key3" />
+                            <Picker.Item label="Net Banking" value="key4" />
+                        </Picker> */}
                         <Input
                             placeholder='give a reason'
                             onChangeText={(text) => { this.setState({ reason: text }) }}
