@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Item, Text, Input,Footer, Button,Picker } from 'native-base';
+import { Item, Text, Input, Footer, Button, Picker } from 'native-base';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import BaseColor from '../Core/BaseTheme';
 import axios from 'axios';
 
 export default class CallDetailsPage extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            call_log_id:'',
+        this.state = {
+            call_log_id: '',
             details: '',
             issues: [],
             number_of_today_call: '',
             number_of_pending_call: '',
-            number_of_open_call: ''
+            number_of_open_call: '',
+            pickerList: ''
         }
         this.state.call_log_id = this.props.route.params.call_log_id;
         this.state.number_of_today_call = this.props.route.params.number_of_today_call;
@@ -23,27 +24,27 @@ export default class CallDetailsPage extends Component {
         // alert(this.state.call_log_id+"hihihi");
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.showDetails();
     }
 
-    showDetails = async() => {
+    showDetails = async () => {
         var details;
-        var issues= [];
-        await axios.post("http://teamassist.websteptech.co.uk/api/getlogdetails",{
+        var issues = [];
+        await axios.post("http://teamassist.websteptech.co.uk/api/getlogdetails", {
             call_log_id: this.state.call_log_id
-        }).then(function(response){
+        }).then(function (response) {
             console.log(response.data.call_log_details);
             details = response.data.call_log_details;
             issues = details.total_primary_issue_list;
             //console.log(issues.map(i => i.issue_name));
-        }).catch(function(error){
+        }).catch(function (error) {
             console.log(error)
         })
 
         this.setState({
-            details : details,
-            issues : issues
+            details: details,
+            issues: issues
         })
 
         //console.log(this.state.details)
@@ -54,16 +55,25 @@ export default class CallDetailsPage extends Component {
             name: 'CallReshedulePage',
             params: {
                 call_log_id: this.state.call_log_id,
-                number_of_today_call : this.state.number_of_today_call,
-                number_of_open_call : this.state.number_of_open_call,
-                number_of_pending_call : this.state.number_of_pending_call
+                number_of_today_call: this.state.number_of_today_call,
+                number_of_open_call: this.state.number_of_open_call,
+                number_of_pending_call: this.state.number_of_pending_call
             }
         })
+    }
+
+    gotToCloseCallPage = () => {
+        alert("feature coming soon")
     }
     render() {
         var details = this.state.details;
         var issues = [];
         issues = this.state.issues;
+        var issueList = this.state.issues.map((i, k) => {
+            return (
+                <Picker.Item label={i.issue_name} key={k} value={i.id} />
+            )
+        })
         return (
             <SafeAreaView>
                 <ScrollView>
@@ -88,7 +98,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.accountTextBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:20 }}>{details.log_account}</Text>
+                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 20 }}>{details.log_account}</Text>
                     </View>
 
                     <View style={styles.accountTextView}>
@@ -96,7 +106,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.accountTextBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily:'Poppins-Regular.ttf',fontSize:17 }}>{details.log_contract_name}</Text>
+                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>{details.log_contract_name}</Text>
                     </View>
 
                     <View style={styles.accountTextView}>
@@ -105,8 +115,8 @@ export default class CallDetailsPage extends Component {
 
                     <View style={styles.calldetailsBox}>
                         <View style={{ flexDirection: 'row' }}>
-                            <View style={{width:300}}>
-                            <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:17 }}>{details.log_address}</Text>
+                            <View style={{ width: 300 }}>
+                                <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>{details.log_address}</Text>
                             </View>
                             <Icon
                                 name="location"
@@ -121,7 +131,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.calldetailsBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:17}}>{details.call_details}</Text>
+                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>{details.call_details}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -131,7 +141,7 @@ export default class CallDetailsPage extends Component {
                             </View>
 
                             <View style={styles.rowTextBox}>
-                                <Text style={{ marginLeft: 10, marginTop: 10 , fontFamily:'Poppins-Regular.ttf',fontSize:17}}>Account</Text>
+                                <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>Account</Text>
                             </View>
                         </View>
 
@@ -148,29 +158,42 @@ export default class CallDetailsPage extends Component {
 
 
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <View style={{width: 180}}>
+                        <View style={{ width: 180 }}>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Primary issues</Text>
                             </View>
                             <View style={styles.rowTextBox}>
+                                {/* <Picker
+                                    mode='dropdown'
+                                    selectedValue={this.state.pickerList}
+                                    onValueChange={(value) => { this.setState({ pickerList: value }) }}
+                                >
+                                    {issueList}
+                                </Picker> */}
                                 <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.primary_issue}</Text>
                             </View>
                         </View>
 
-                        <View style={{marginLeft:10,width: 180}}>
+                        <View style={{ marginLeft: 10, width: 180 }}>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Secondary issues</Text>
                             </View>
                             <View style={styles.rowTextBox}>
                                 <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.secondary_issue}</Text>
+                                {/* <Picker
+                                    mode='dropdown'
+                                    selectedValue={this.state.pickerList}
+                                    onValueChange={(value) => { this.setState({ pickerList: value }) }}
+                                >
+                                    {issueList}
+                                </Picker> */}
                             </View>
-                            
+
                         </View>
                     </View>
 
-                    <Item></Item>
 
-                    <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 1 ,height:50}}>
                         {/* <Button style={{ backgroundColor: BaseColor.CommonTextColor, marginRight: 30, borderRadius: 10, marginLeft:20,height:40,width:90 }}>
                             <Text style={{ fontSize: 12 }}>Close call</Text>
                         </Button>
@@ -184,7 +207,7 @@ export default class CallDetailsPage extends Component {
                         <Button style={{ backgroundColor: "#bb0808", borderRadius: 10,marginRight:0,height:40,width:90 }}>
                             <Text style={{ fontSize: 12 }}>Pending call</Text>
                         </Button> */}
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CallClosedPage')}>
+                        <TouchableOpacity onPress={() => this.gotToCloseCallPage()}>
                             <View style={styles.closeCallStyle}>
                                 <Text style={styles.buttonText}>Close call</Text>
                             </View>
@@ -203,7 +226,7 @@ export default class CallDetailsPage extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{ margin: 20 }}></View>
+                    <View style={{ margin: 30 }}></View>
 
                 </ScrollView>
             </SafeAreaView>
@@ -236,13 +259,13 @@ const styles = StyleSheet.create({
         color: BaseColor.ColorWhite,
         fontSize: 16,
         padding: 5,
-        marginTop:9
+        marginTop: 9
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
         fontSize: 16,
         padding: 5,
-        marginTop:9
+        marginTop: 9
     },
     itemCount: {
         backgroundColor: "#e6e6e6",
@@ -254,7 +277,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     itemCountText: {
-        marginLeft: 10,
+        marginLeft: 14,
         marginTop: 10
     },
     timeText: {
@@ -322,7 +345,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
         borderRadius: 10,
         height: 40,
-        marginLeft: 20
+        marginLeft: 35
     },
     resheduleCallStyle: {
         backgroundColor: "#19bc45",

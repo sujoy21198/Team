@@ -165,11 +165,25 @@ export class HeaderComponent extends Component {
 }
 
 export class DetailsHeaderComponent extends Component {
+    constructor(){
+        super()
+        this.state={
+            curTime :''
+        }
+    }
+
+    componentDidMount(){
+        setInterval(() => {
+            this.setState({
+              curTime : new Date().toLocaleString()
+            })
+          }, 1000)
+    }
     render() {
         return (
             <View>
                 <Text style={{ color: BaseColor.ColorWhite, fontSize: 20 }}>Task of the day</Text>
-                <Text style={{ color: BaseColor.ColorWhite, fontSize: 13 }}>Date and Time</Text>
+        <Text style={{ color: BaseColor.ColorWhite, fontSize: 13 }}>{this.state.curTime}</Text>
             </View>
         );
     }
