@@ -4,6 +4,8 @@ import { Text, Input, Item, Button } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import CustomIndicator from '../Core/CustomIndicator';
 import axios from 'axios';
+import {heightToDp,widthToDp} from '../Responsive'
+
 
 export default class SignInPage extends Component {
     constructor() {
@@ -98,8 +100,8 @@ const styles = StyleSheet.create({
         backgroundColor: BaseColor.BackgroundColor,
     },
     textArea: {
-        marginTop: 300,
-        marginLeft: 20
+        marginTop:  heightToDp("30%"),
+        marginLeft:  widthToDp("5%")
     },
     textStyle: {
         fontFamily: 'Poppins-Regular',
@@ -109,15 +111,15 @@ const styles = StyleSheet.create({
     },
     mobileNumberText: {
         color: "#89919d",
-        marginTop: 50,
+        marginTop: heightToDp("3%"),
         fontSize: 15,
-        marginLeft: 20
+        marginLeft: widthToDp("5%")
     },
     inpStyle: {
-        width: 350,
-        marginLeft: 20,
-        height: 40,
-        marginTop: 20,
+        width: widthToDp("90%"),
+        marginLeft: widthToDp("5%"),
+        height: heightToDp("5%"),
+        marginTop: heightToDp("3%"),
         borderRadius: 10,
     },
     // buttonStyle: {
@@ -134,17 +136,17 @@ const styles = StyleSheet.create({
     // }
     buttonStyle: {
         backgroundColor: BaseColor.CommonTextColor,
-        width: 140,
-        marginTop: 40,
+        width: widthToDp("30%"),
+        marginTop: heightToDp("3%"),
         alignSelf: 'flex-end',
         borderRadius: 10,
-        height: 40,
-        marginRight: 20
+        height: heightToDp("5%"),
+        marginRight: widthToDp("5%")
     },
     buttonText: {
         color: BaseColor.ColorWhite,
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
-        marginTop: 6
+        marginTop: heightToDp("1%")
     }
 })

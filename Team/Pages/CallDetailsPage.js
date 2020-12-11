@@ -4,6 +4,8 @@ import { Item, Text, Input, Footer, Button, Picker } from 'native-base';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import BaseColor from '../Core/BaseTheme';
 import axios from 'axios';
+import {heightToDp,widthToDp} from '../Responsive'
+
 
 export default class CallDetailsPage extends Component {
     constructor(props) {
@@ -65,6 +67,10 @@ export default class CallDetailsPage extends Component {
     gotToCloseCallPage = () => {
         alert("feature coming soon")
     }
+
+    goToPendingPage = () => {
+        alert("feature coming soon")
+    }
     render() {
         var details = this.state.details;
         var issues = [];
@@ -121,7 +127,7 @@ export default class CallDetailsPage extends Component {
                             <Icon
                                 name="location"
                                 size={30}
-                                style={{ marginTop: 30 }}
+                                style={{ marginTop: heightToDp("5%") , marginLeft: widthToDp("5%")}}
                             />
                         </View>
                     </View>
@@ -193,7 +199,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
 
-                    <View style={{ flexDirection: 'row', marginTop: 1 ,height:50}}>
+                    <View style={{ flexDirection: 'row', marginTop: heightToDp("1%") ,height:heightToDp("5%"),width:widthToDp("100%")}}>
                         {/* <Button style={{ backgroundColor: BaseColor.CommonTextColor, marginRight: 30, borderRadius: 10, marginLeft:20,height:40,width:90 }}>
                             <Text style={{ fontSize: 12 }}>Close call</Text>
                         </Button>
@@ -207,7 +213,7 @@ export default class CallDetailsPage extends Component {
                         <Button style={{ backgroundColor: "#bb0808", borderRadius: 10,marginRight:0,height:40,width:90 }}>
                             <Text style={{ fontSize: 12 }}>Pending call</Text>
                         </Button> */}
-                        <TouchableOpacity onPress={() => this.gotToCloseCallPage()}>
+                        <TouchableOpacity onPress={() => this.gotToCloseCallPage()} style={{height:heightToDp("100%")}}>
                             <View style={styles.closeCallStyle}>
                                 <Text style={styles.buttonText}>Close call</Text>
                             </View>
@@ -219,7 +225,7 @@ export default class CallDetailsPage extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('FingerPrintScreen')}>
+                        <TouchableOpacity onPress={() => this.goToPendingPage()}>
                             <View style={styles.pendingCallStyle}>
                                 <Text style={styles.buttonText}>Pending call</Text>
                             </View>
@@ -237,99 +243,101 @@ export default class CallDetailsPage extends Component {
 const styles = StyleSheet.create({
     showCallsView: {
         flexDirection: 'row',
-        width: 450,
-        height: 50,
+        width: widthToDp("62%"),
+        height: heightToDp("0.1%"),
         backgroundColor: '#000',
         alignSelf: 'flex-start',
         borderRadius: 5,
-        marginTop: 20,
+        marginTop: heightToDp("2%"),
+        marginLeft:widthToDp("4%"),
     },
     totalCalls: {
-        width: 200,
-        height: 50,
+        width: widthToDp("42%"),
+        height: heightToDp("6%"),
         backgroundColor: BaseColor.SecondContainer
     },
     unreadCalls: {
-        width: 225,
-        height: 50,
+        width: widthToDp("45%"),
+        height: heightToDp("6%"),
         backgroundColor: BaseColor.CommonTextColor
     },
     totalCallsText: {
         fontWeight: 'bold',
         color: BaseColor.ColorWhite,
-        fontSize: 16,
+        fontSize: widthToDp("3.5%"),
         padding: 5,
-        marginTop: 9
+        marginTop: heightToDp("1%")
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
-        fontSize: 16,
+        fontSize: widthToDp("3.5%"),
         padding: 5,
-        marginTop: 9
+        marginTop: heightToDp("1%")
     },
     itemCount: {
         backgroundColor: "#e6e6e6",
-        height: 40,
-        width: 40,
+        height: heightToDp("4%"),
+        width: widthToDp("8%"),
         borderRadius: 20,
         flexDirection: 'row',
-        marginLeft: 10,
-        marginTop: 10
+        marginLeft: widthToDp("3%"),
+        marginTop:  heightToDp("2%")
     },
     itemCountText: {
-        marginLeft: 14,
-        marginTop: 10
+        marginLeft: widthToDp("3%"),
+        marginTop:  heightToDp("0.7%"),
     },
     timeText: {
-        marginLeft: 20,
-        marginTop: 14,
+        marginLeft: widthToDp("3%"),
+        marginTop: heightToDp("2.5%"),
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold',
-        fontSize: 17
+        fontSize: widthToDp("4%"),
+        fontFamily: 'Poppins-Regular.tff'
     },
     timeandcountView: {
         flexDirection: 'row',
-        marginTop: 50,
-        marginLeft: 20
+        marginTop:  heightToDp("5%"),
+        marginLeft: widthToDp("4%")
     },
     accountTextView: {
         flexDirection: 'row',
-        marginLeft: 30,
-        marginTop: 10
+        marginTop:  heightToDp("2%"),
+        marginLeft: widthToDp("5%")
     },
     accountText: {
-        fontSize: 13,
+        fontSize: widthToDp("3.5%"),
         color: BaseColor.AboveFieldTextColor
     },
     accountTextBox: {
-        marginLeft: 30,
+        marginLeft: widthToDp("4%"),
         borderColor: BaseColor.BorderColor,
         borderWidth: 2,
         borderRadius: 5,
-        width: 340,
-        marginTop: 10,
-        height: 100
+        width: widthToDp("90%"),
+        marginTop:  heightToDp("1%"),
+        height:  heightToDp("16%")
     },
     rowTextBox: {
-        marginLeft: 30,
+        marginLeft: widthToDp("5%"),
         borderColor: BaseColor.BorderColor,
         borderWidth: 2,
-        width: 150,
-        marginTop: 10,
+        width: widthToDp("40%"),
+        marginTop:  heightToDp("2%"),
         borderRadius: 5,
-        height: 50
+        height:  heightToDp("5%")
     },
     calldetailsBox: {
-        marginLeft: 30,
+        marginLeft: widthToDp("5%"),
         borderColor: BaseColor.BorderColor,
         borderWidth: 2,
         borderRadius: 5,
-        width: 340,
-        marginTop: 10,
-        height: 100
+        width: widthToDp("90%"),
+        marginTop: heightToDp("1%"),
+        height: heightToDp("14%")
     },
     footer: {
-        height: 70,
+        height: heightToDp("5%"),
         backgroundColor: BaseColor.ColorWhite,
         paddingBottom: 20
     },
@@ -337,39 +345,40 @@ const styles = StyleSheet.create({
         color: BaseColor.ColorWhite,
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
-        marginTop: 6
+        marginTop: heightToDp("1%"),
+        fontSize: widthToDp("3.5%"),
     },
     closeCallStyle: {
         backgroundColor: BaseColor.CommonTextColor,
-        width: 100,
-        marginTop: 40,
+        width:  widthToDp("30%"),
+        marginTop: heightToDp("5%"),
         borderRadius: 10,
-        height: 40,
-        marginLeft: 35
+        height: heightToDp("5%"),
+        marginLeft:  widthToDp("3%"),
     },
     resheduleCallStyle: {
         backgroundColor: "#19bc45",
-        width: 120,
-        marginTop: 40,
+        width: widthToDp("30%"),
+        marginTop:  heightToDp("5%"),
         borderRadius: 10,
-        height: 40,
-        marginLeft: 10
+        height:  heightToDp("5%"),
+        marginLeft:  widthToDp("2%")
     },
     pendingCallStyle: {
         backgroundColor: "#bb0808",
-        width: 100,
-        marginTop: 40,
+        width: widthToDp("30%"),
+        marginTop: heightToDp("5%"),
         borderRadius: 10,
-        height: 40,
+        height: heightToDp("5%"),
         marginRight: 20,
-        marginLeft: 10
+        marginLeft: widthToDp("2%")
     },
     resheduleCallText: {
         color: BaseColor.ColorWhite,
         fontFamily: 'Poppins-Regular.tff',
         alignSelf: 'center',
-        marginTop: 6,
-        fontSize: 15,
+        marginTop: heightToDp("1%"),
+        fontSize: widthToDp("3.5%"),
         padding: 1
     }
 })

@@ -9,6 +9,8 @@ import BaseColor from '../Core/BaseTheme';
 import CustomIndicator from '../Core/CustomIndicator';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {heightToDp,widthToDp} from '../Responsive'
+
 
 export default class OtpPage extends Component {
     constructor(props) {
@@ -131,26 +133,26 @@ const styles = StyleSheet.create({
         backgroundColor: BaseColor.BackgroundColor,
     },
     textArea: {
-        marginTop: 250,
-        marginLeft: 20
+        marginTop: heightToDp("30%"),
+        marginLeft: widthToDp("5%")
     },
     textStyle: {
         fontFamily: 'Poppins-Regular',
-        fontSize: 25,
+        fontSize: widthToDp("6%"),
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold'
     },
     subtitle: {
         color: "#89919d",
-        marginTop: 10,
-        fontSize: 13,
-        marginLeft: 20
+        marginTop: heightToDp("1%"),
+        fontSize: widthToDp("3%"),
+        marginLeft: widthToDp("5%")
     },
     roundedTextInput: {
         borderRadius: 5,
         borderWidth: 1,
-        height: 70,
-        marginTop: 10,
+        height: heightToDp("9%"),
+        marginTop: heightToDp("2%"),
         color: "#fff",
         fontSize: 30,
         backgroundColor: BaseColor.CommonTextColor
@@ -159,38 +161,38 @@ const styles = StyleSheet.create({
         width: '90%',
         justifyContent: 'center',
         alignSelf: 'center',
-        margin: 20,
+        margin: heightToDp("1%"),
     },
     resendView: {
         flexDirection: 'row',
         alignContent: 'flex-end',
         alignSelf: 'flex-end',
-        marginRight: 20
+        marginRight: widthToDp("5%")
     },
     resendText: {
         color: "#89919d",
-        marginTop: 30,
-        fontSize: 13,
-        marginLeft: 20
+        marginTop: heightToDp("3.5%"),
+        fontSize:  widthToDp("3%"),
+        marginLeft: widthToDp("5%")
     },
     whiteText: {
         color: BaseColor.CommonTextColor,
-        marginTop: 30,
-        fontSize: 12,
-        marginLeft: 2
+        marginTop: heightToDp("3.5%"),
+        fontSize: widthToDp("3%"),
+        marginLeft: widthToDp("2%")
     },
     buttonStyle: {
         backgroundColor: BaseColor.CommonTextColor,
-        width: 140,
-        marginTop: 30,
+        width: widthToDp("40%"),
+        marginTop: heightToDp("4%"),
         alignSelf: 'center',
         borderRadius: 10,
-        height: 40
+        height: heightToDp("5%")
     },
     buttonText: {
         color: BaseColor.ColorWhite,
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
-        marginTop: 6
+        marginTop: heightToDp("1.2%")
     }
 });

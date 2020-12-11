@@ -5,7 +5,7 @@ import BaseColor from '../Core/BaseTheme';
 import Webstep from '../assets/Webstep';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomIndicator from '../Core/CustomIndicator';
-
+import {heightToDp,widthToDp} from '../Responsive'
 
 export default class WelcomePage extends Component {
     constructor(){
@@ -51,39 +51,39 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     logo: {
-        marginTop: 250,
+        marginTop: heightToDp("30%"),
         alignSelf: 'center',
     },
     textArea: {
         alignSelf: 'center',
         alignContent: 'center',
-        marginTop: 60
+        marginTop: heightToDp("10%")
     },
     textStyle: {
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
-        fontSize: 25,
+        fontSize: widthToDp("7%"),
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold'
     },
     subTitle: {
         color: '#89919d',
-        fontSize: 13,
+        fontSize: widthToDp("3.5%"),
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center'
     },
     buttonStyle: {
         backgroundColor: BaseColor.CommonTextColor,
-        width: 140,
-        marginTop: 80,
+        width: widthToDp("60%"),
+        marginTop: heightToDp("5%"),
         alignSelf: 'center',
         borderRadius: 10,
-        height: 40
+        height: heightToDp("5%")
     },
     buttonText: {
         color: BaseColor.ColorWhite,
         fontFamily: 'Poppins-Regular',
         alignSelf: 'center',
-        marginTop: 6
+        marginTop:  heightToDp("1.2%")
     }
 });

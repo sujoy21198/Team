@@ -8,6 +8,8 @@ import axios from 'axios';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
 import EmptyPage from './EmptyPage';
 import CustomIndicator from '../Core/CustomIndicator';
+import {heightToDp,widthToDp} from '../Responsive'
+
 
 
 const data = [
@@ -206,7 +208,7 @@ export default class HomePage extends Component {
                 <View>
                     <FlatList
                         data={task}
-                        style={{ margin: 20 }}
+                        style={{ margin: 10 }}
                         onRefresh={() => this.onRefresh()}
                         refreshing={this.state.isFetching}
                         keyExtractor={(item, index) => item.call_log_id}
@@ -222,13 +224,13 @@ export default class HomePage extends Component {
                                     </View>
 
 
-                                    <View style={{ flexDirection: 'row', marginLeft: 20, marginTop: 10 }}>
+                                    <View style={{ flexDirection: 'row', marginLeft:  widthToDp("4%"), marginTop:  heightToDp("1%") }}>
                                         <Text style={{ color: BaseColor.CommonTextColor }}>Account : </Text>
-                                        <View style={{ width: 300 }}>
-                                            <Text style={{ color: BaseColor.CommonTextColor, fontWeight: 'bold', fontSize: 16 }}>{item.log_account}</Text>
+                                        <View style={{ width: widthToDp("65%") }}>
+                                            <Text style={{ color: BaseColor.CommonTextColor, fontWeight: 'bold', fontSize: widthToDp("4%"),marginRight: widthToDp("5%") }}>{item.log_account}</Text>
                                         </View>
-                                        <Text style={{ color: BaseColor.CommonTextColor }}>Contract : </Text>
-                                        <Text style={{ color: BaseColor.CommonTextColor, fontWeight: 'bold', fontSize: 16 }}>{item.log_contract_name}</Text>
+                                        {/* <Text style={{ color: BaseColor.CommonTextColor }}>Contract : </Text>
+                                        <Text style={{ color: BaseColor.CommonTextColor, fontWeight: 'bold', fontSize: widthToDp("4%") }}>{item.log_contract_name}</Text> */}
                                     </View>
 
                                     {/* <View style={{ flexDirection: 'row', marginLeft: 20 }}>
@@ -249,7 +251,7 @@ export default class HomePage extends Component {
 
                 <CustomIndicator IsLoading={this.state.isLoading} />
 
-                <View style={{ margin: 30 }}></View>
+                
 
             </SafeAreaView>
         );
@@ -263,80 +265,81 @@ const styles = StyleSheet.create({
         backgroundColor: BaseColor.BackgroundColor,
     },
     secondContainer: {
-        height: 80,
+        height:  heightToDp("10%"),
         backgroundColor: BaseColor.SecondContainer
     },
     secondContainerText: {
         color: BaseColor.ColorWhite,
-        fontSize: 20,
-        marginLeft: 20,
-        marginTop: 10
+        fontSize: widthToDp("5%"),
+        marginLeft: widthToDp("5%"),
+        marginTop: heightToDp("2%")
     },
     datetimeText: {
         color: BaseColor.ColorWhite,
-        fontSize: 15,
-        marginLeft: 20,
-        marginTop: 5,
+        fontSize: widthToDp("4%"),
+        marginLeft: widthToDp("5%"),
+        marginTop: heightToDp("0.6%"),
         fontFamily: 'Poppins-Regular.tff'
     },
     showCallsView: {
         flexDirection: 'row',
-        width: 450,
-        height: 50,
+        width:  widthToDp("0.8%"),
+        height: heightToDp("4%"),
         backgroundColor: '#000',
         borderRadius: 5,
         marginTop: 20,
     },
     totalCalls: {
-        width: 200,
-        height: 50,
+        width: widthToDp("50%"),
+        height: heightToDp("6%"),
         backgroundColor: BaseColor.SecondContainer
     },
     unreadCalls: {
-        width: 225,
-        height: 50,
+        width: widthToDp("50%"),
+        height: heightToDp("6%"),
         backgroundColor: BaseColor.CommonTextColor
     },
     totalCallsText: {
         fontWeight: 'bold',
         color: BaseColor.ColorWhite,
-        fontSize: 16,
+        fontSize: widthToDp("4%"),
         padding: 5,
         fontFamily: 'Poppins-Regular.tff',
-        marginTop:9
+        marginTop:heightToDp("1%")
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
-        fontSize: 16,
+        fontSize: widthToDp("3.3%"),
         padding: 5,
-        marginTop:9,
+        marginTop:heightToDp("1.3%"),
     },
     flatListCard: {
-        width: 350,
+        width: widthToDp("90%"),
         alignSelf: 'center',
-        marginBottom: 20,
-        height: 130,
+        marginBottom: heightToDp("3%"),
+        height: heightToDp("15%"),
         borderRadius: 7
     },
     itemCount: {
         backgroundColor: "#e6e6e6",
-        height: 40,
-        width: 40,
+        height: heightToDp("4%"),
+        width: widthToDp("8%"),
         borderRadius: 20,
         flexDirection: 'row',
-        marginLeft: 10,
-        marginTop: 10
+        marginLeft: widthToDp("3%"),
+        marginTop:  heightToDp("2%")
     },
     itemCountText: {
-        marginLeft: 10,
-        marginTop: 10
+        marginLeft: widthToDp("3%"),
+        marginTop:  heightToDp("0.7%"),
+        
     },
     timeText: {
-        marginLeft: 20,
-        marginTop: 14,
+        marginLeft: widthToDp("3%"),
+        marginTop: heightToDp("2.5%"),
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold',
-        fontSize: 17,
+        fontSize: widthToDp("4%"),
         fontFamily: 'Poppins-Regular.tff'
     }
 })

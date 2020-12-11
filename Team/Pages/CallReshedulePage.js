@@ -7,6 +7,8 @@ import Clock from 'react-native-vector-icons/SimpleLineIcons';
 import Arrow from 'react-native-vector-icons/SimpleLineIcons';
 import axios from 'axios';
 import Dialog from "react-native-dialog";
+import {heightToDp,widthToDp} from '../Responsive'
+
 
 
 
@@ -273,7 +275,7 @@ export default class CallReshedulePage extends Component {
                     </View>
                 </View>
                 <Button style={{
-                    alignSelf: 'flex-end', marginTop: 300, width: 150, marginRight: 30, backgroundColor: BaseColor.CommonTextColor, borderRadius: 5
+                    alignSelf: 'flex-end', marginTop: heightToDp("4%"), width: 150, marginRight: 30, backgroundColor: BaseColor.CommonTextColor, borderRadius: 5
                 }}
                     onPress={() => this.submit()}
                 >
@@ -320,12 +322,12 @@ const styles = StyleSheet.create({
     },
     itemCount: {
         backgroundColor: "#e6e6e6",
-        height: 40,
-        width: 40,
+        height: heightToDp("4%"),
+        width: widthToDp("8%"),
         borderRadius: 20,
         flexDirection: 'row',
-        marginLeft: 10,
-        marginTop: 10
+        marginLeft: widthToDp("3%"),
+        marginTop:  heightToDp("2%")
     },
     timeandcountView: {
         flexDirection: 'row',
@@ -333,8 +335,8 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     itemCountText: {
-        marginLeft: 12,
-        marginTop: 10
+        marginLeft: widthToDp("3%"),
+        marginTop:  heightToDp("0.7%"),
     },
     timeText: {
         marginLeft: 20,
