@@ -193,7 +193,7 @@ export default class CallReshedulePage extends Component {
                         <Icon
                             name='calendar'
                             size={30}
-                            style={{ marginLeft: 10, marginTop: 10 }}
+                            style={{ marginLeft: widthToDp("6%"), marginTop: heightToDp("1.5%") }}
                             color={BaseColor.CommonTextColor}
                         />
                     </View>
@@ -238,7 +238,7 @@ export default class CallReshedulePage extends Component {
                         <Icon
                             name='clock'
                             size={30}
-                            style={{ marginLeft: 10, marginTop: 10 }}
+                            style={{ marginLeft: widthToDp("6%"), marginTop: heightToDp("1.5%") }}
                             color={BaseColor.CommonTextColor}
                         />
                     </View>
@@ -275,7 +275,7 @@ export default class CallReshedulePage extends Component {
                     </View>
                 </View>
                 <Button style={{
-                    alignSelf: 'flex-end', marginTop: heightToDp("4%"), width: 150, marginRight: 30, backgroundColor: BaseColor.CommonTextColor, borderRadius: 5
+                    alignSelf: 'flex-end', marginTop: heightToDp("4%"), width: widthToDp("35%"), marginRight: widthToDp("9%"), backgroundColor: BaseColor.CommonTextColor, borderRadius: 5
                 }}
                     onPress={() => this.submit()}
                 >
@@ -291,33 +291,33 @@ export default class CallReshedulePage extends Component {
 const styles = StyleSheet.create({
     showCallsView: {
         flexDirection: 'row',
-        width: 355,
-        height: 50,
+        width: widthToDp("6%"),
+        height: heightToDp("5%"),
         backgroundColor: '#000',
         alignSelf: 'flex-start',
         borderRadius: 5,
-        marginTop: 20,
-        marginLeft: 20
+        marginTop: heightToDp("2%"),
+        marginLeft: widthToDp("6%")
     },
     totalCalls: {
-        width: 175,
-        height: 50,
+        width: widthToDp("42%"),
+        height: heightToDp("6%"),
         backgroundColor: BaseColor.SecondContainer
     },
     unreadCalls: {
-        width: 190,
-        height: 50,
+        width: widthToDp("42%"),
+        height: heightToDp("6%"),
         backgroundColor: BaseColor.CommonTextColor
     },
     totalCallsText: {
         fontWeight: 'bold',
         color: BaseColor.ColorWhite,
-        fontSize: 16,
+        fontSize: widthToDp("4%"),
         padding: 5
     },
     unreadCallsText: {
         color: BaseColor.ColorWhite,
-        fontSize: 16,
+        fontSize: widthToDp("4%"),
         padding: 5
     },
     itemCount: {
@@ -331,41 +331,41 @@ const styles = StyleSheet.create({
     },
     timeandcountView: {
         flexDirection: 'row',
-        marginTop: 30,
-        marginLeft: 20
+        marginTop: heightToDp("1%"),
+        marginLeft: widthToDp("5%")
     },
     itemCountText: {
         marginLeft: widthToDp("3%"),
         marginTop:  heightToDp("0.7%"),
     },
     timeText: {
-        marginLeft: 20,
-        marginTop: 20,
+        marginLeft: widthToDp("2%"),
+        marginTop: widthToDp("5%"),
         color: BaseColor.CommonTextColor,
         fontWeight: 'bold',
-        fontSize: 17
+        fontSize: widthToDp("5%")
     },
     accountTextView: {
         flexDirection: 'row',
-        marginLeft: 30,
-        marginTop: 10
+        marginLeft: widthToDp("5%"),
+        marginTop: heightToDp("2%")
     },
     accountTextBox: {
-        marginLeft: 30,
+        marginLeft: widthToDp("5%"),
         borderColor: BaseColor.BorderColor,
         borderWidth: 2,
         borderRadius: 5,
-        width: 340,
-        marginTop: 10,
-        height: 50
+        width: widthToDp("85%"),
+        marginTop: heightToDp("1%"),
+        height: heightToDp("6%")
     },
     timeBox: {
-        marginLeft: 30,
+        marginLeft: widthToDp("5%"),
         borderColor: BaseColor.BorderColor,
         borderWidth: 2,
         borderRadius: 5,
-        width: 340,
-        marginTop: 10,
-        height: 50
+        width: widthToDp("85%"),
+        marginTop: heightToDp("1%"),
+        height: heightToDp("6%")
     }
 })
