@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
         marginTop:  heightToDp("2%")
     },
     itemCountText: {
-        marginLeft: widthToDp("3%"),
+        marginLeft: widthToDp("2%"),
         marginTop:  heightToDp("0.7%"),
         
     },

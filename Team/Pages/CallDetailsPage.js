@@ -104,7 +104,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.accountTextBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 20 }}>{details.log_account}</Text>
+                        <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  widthToDp("2%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("5%") }}>{details.log_account}</Text>
                     </View>
 
                     <View style={styles.accountTextView}>
@@ -112,7 +112,7 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.accountTextBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>{details.log_contract_name}</Text>
+                        <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  widthToDp("2%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.5%") }}>{details.log_contract_name}</Text>
                     </View>
 
                     <View style={styles.accountTextView}>
@@ -121,8 +121,8 @@ export default class CallDetailsPage extends Component {
 
                     <View style={styles.calldetailsBox}>
                         <View style={{ flexDirection: 'row' }}>
-                            <View style={{ width: 300 }}>
-                                <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>{details.log_address}</Text>
+                            <View style={{ width:  widthToDp("75%") }}>
+                                <Text style={{ marginLeft:  widthToDp("2.5%"), marginTop:  heightToDp("2%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.5%") }}>{details.log_address}</Text>
                             </View>
                             <Icon
                                 name="location"
@@ -137,17 +137,17 @@ export default class CallDetailsPage extends Component {
                     </View>
 
                     <View style={styles.calldetailsBox}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>{details.call_details}</Text>
+                        <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  widthToDp("2%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.2%") }}>{details.call_details}</Text>
                     </View>
 
-                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <View style={{ flexDirection: 'row', marginTop:  heightToDp("1%") }}>
                         <View>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Department</Text>
                             </View>
 
                             <View style={styles.rowTextBox}>
-                                <Text style={{ marginLeft: 10, marginTop: 10, fontFamily: 'Poppins-Regular.ttf', fontSize: 17 }}>Account</Text>
+                                <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  heightToDp("1%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.1%") }}>Account</Text>
                             </View>
                         </View>
 
@@ -157,13 +157,13 @@ export default class CallDetailsPage extends Component {
                             </View>
 
                             <View style={styles.rowTextBox}>
-                                <Text style={{ marginLeft: 10, marginTop: 10 }}>A k Ghosh</Text>
+                                <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  heightToDp("1%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.1%") }}>A k Ghosh</Text>
                             </View>
                         </View>
                     </View>
 
 
-                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <View style={{ flexDirection: 'row', marginTop: heightToDp("1%") }}>
                         <View style={{ width: 180 }}>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Primary issues</Text>
@@ -176,16 +176,16 @@ export default class CallDetailsPage extends Component {
                                 >
                                     {issueList}
                                 </Picker> */}
-                                <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.primary_issue}</Text>
+                                <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  heightToDp("1%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.1%") }}>{details.primary_issue}</Text>
                             </View>
                         </View>
 
-                        <View style={{ marginLeft: 10, width: 180 }}>
+                        <View style={{ marginLeft: widthToDp("2%"), width: widthToDp("40%") }}>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Secondary issues</Text>
                             </View>
                             <View style={styles.rowTextBox}>
-                                <Text style={{ marginLeft: 10, marginTop: 10 }}>{details.secondary_issue}</Text>
+                                <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  heightToDp("1%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.1%") }}>{details.secondary_issue}</Text>
                                 {/* <Picker
                                     mode='dropdown'
                                     selectedValue={this.state.pickerList}
@@ -219,13 +219,13 @@ export default class CallDetailsPage extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.goToReshedulePage()}>
+                        <TouchableOpacity onPress={() => this.goToReshedulePage()} style={{height:heightToDp("100%")}}>
                             <View style={styles.resheduleCallStyle}>
                                 <Text style={styles.resheduleCallText}>Reshedule call</Text>
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.goToPendingPage()}>
+                        <TouchableOpacity onPress={() => this.goToPendingPage()} style={{height:heightToDp("100%")}}>
                             <View style={styles.pendingCallStyle}>
                                 <Text style={styles.buttonText}>Pending call</Text>
                             </View>
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
         marginTop:  heightToDp("2%")
     },
     itemCountText: {
-        marginLeft: widthToDp("3%"),
+        marginLeft: widthToDp("2%"),
         marginTop:  heightToDp("0.7%"),
     },
     timeText: {

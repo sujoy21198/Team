@@ -15,6 +15,8 @@ import PoweredBy from '../assets/PoweredBy';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BaseColor from '../Core/BaseTheme';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
+import {heightToDp,widthToDp} from '../Responsive'
+
 
 
 export default class DrawerContentPage extends Component {
@@ -122,34 +124,41 @@ export default class DrawerContentPage extends Component {
             /> */}
                 <DrawerContentScrollView {...props}>
                     <View>
-                        <Title style={{ marginLeft: 10 }}>{this.state.username}</Title>
-                        <Caption style={{ marginLeft: 10 }}>{this.state.email}</Caption>
+                        <Title style={{ marginLeft: widthToDp("6%") }}>{this.state.username}</Title>
+                        <View style={{flex: 1, height: 1, backgroundColor:'#f4f4f4',marginTop: heightToDp("1%")}} />
+                        <Caption style={{ marginLeft: widthToDp("6%") }}>{this.state.email}</Caption>
+
+                        <View style={{flex: 1, height: 1, backgroundColor:'#f4f4f4',marginTop: heightToDp("1%")}} />
 
 
                         <Drawer.Section style={styles.drawerSection}>
-                            <Drawer.Item
-                                icon={({ color, size }) => (
-                                    <Icon
-                                        name='logout'
-                                        color={color}
-                                        size={23}
-                                    />
-                                )}
-                                label="Sign Out"
-                                onPress={() => this.signOut()}
-                            />
+                            
                             <View style={{ flexDirection: 'row' }}>
                                 <Finger
                                     name={this.state.iconName}
                                     size={32}
                                     style={{ marginLeft: 20 }}
                                 />
-                                <Text style={{ marginLeft: 8, marginTop: 5, marginRight: 10, color: BaseColor.CommonTextColor, fontFamily: 'Poppins-Regular.ttf' }}>{this.state.fingerPrintText}</Text>
+                                <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), marginRight: widthToDp("2%"), color: BaseColor.CommonTextColor, fontFamily: 'Poppins-Regular.ttf' }}>{this.state.fingerPrintText}</Text>
                                 <Switch
                                     value={this.state.switchValue}
                                     onValueChange={(switchValue) => this.showValue(switchValue)}
                                 />
                             </View>
+
+                            <View style={{flex: 1, height: 1, backgroundColor:'#f4f4f4',marginTop: heightToDp("1%")}} />
+                            <Drawer.Item
+                                icon={({ color, size }) => (
+                                    <Icon
+                                        name='logout'
+                                        color={color}
+                                        size={23}
+                                        style={{marginLeft:widthToDp("2%")}}
+                                    />
+                                )}
+                                label="Sign Out"
+                                onPress={() => this.signOut()}
+                            />
 
                         </Drawer.Section>
                     </View>
@@ -166,9 +175,10 @@ export default class DrawerContentPage extends Component {
                     label="Sign Out"
                 /> */}
                     <View style={{ flexDirection: 'row' }}>
-                        <Text>Powered by </Text>
+                    <Text style={{ marginLeft: widthToDp("5.5%") }}>Ver: 1.0</Text>
+                        <Text style={{marginLeft: widthToDp("20%")}}>Powered by </Text>
                         <PoweredBy />
-                        <Text style={{ marginLeft: 80 }}>ver: 1.0</Text>
+                        
                     </View>
                 </Drawer.Section>
             </View>
@@ -202,9 +212,7 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     bottomDrawerSection: {
-        marginBottom: 10,
-        borderTopColor: '#f4f4f4',
-        borderTopWidth: 1,
+        marginBottom: 30,
         marginLeft: 10
     },
     preference: {
