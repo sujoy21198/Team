@@ -192,15 +192,15 @@ const styles = StyleSheet.create({
         flex: 1
     },
     userInfoSection: {
-        paddingLeft: 20
+        paddingLeft: widthToDp("5.5%")
     },
     title: {
-        fontSize: 16,
-        marginTop: 3,
+        fontSize: widthToDp("3.5%"),
+        marginTop: heightToDp("5.5%"),
         fontWeight: 'bold'
     },
     caption: {
-        fontSize: 14,
+        fontSize: widthToDp("5.5%"),
         lineHeight: 14
     },
     row: {
