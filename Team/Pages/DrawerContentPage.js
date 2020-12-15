@@ -15,7 +15,7 @@ import PoweredBy from '../assets/PoweredBy';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BaseColor from '../Core/BaseTheme';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
-import {heightToDp,widthToDp} from '../Responsive'
+import { heightToDp, widthToDp } from '../Responsive'
 
 
 
@@ -29,10 +29,10 @@ export default class DrawerContentPage extends Component {
             iconName: 'fingerprint-off',
             fingerPrintText: 'Enable Fingerprint unlock'
         }
-        
+
     }
 
-    
+
 
     componentDidMount() {
         this.getUserDetail();
@@ -40,14 +40,14 @@ export default class DrawerContentPage extends Component {
     }
 
 
-    checkToggleStateLast = async() =>{
+    checkToggleStateLast = async () => {
         let test = await AsyncStorage.getItem('bool')
         console.log(test)
-        if(test === 'true'){
+        if (test === 'true') {
             this.state.switchValue = true
             this.setState({ iconName: 'fingerprint' })
             this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
-        }else{
+        } else {
             this.state.switchValue = false
             this.setState({ iconName: 'fingerprint-off' })
             this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
@@ -56,7 +56,7 @@ export default class DrawerContentPage extends Component {
 
 
 
-   
+
 
     getUserDetail = async () => {
         let value = await AsyncStorage.getItem('username');
@@ -69,11 +69,11 @@ export default class DrawerContentPage extends Component {
         //console.log(this.state.switchValue)
     }
 
-    signOut = async() => {
+    signOut = async () => {
         await AsyncStorage.removeItem('username');
 
         this.props.navigation.navigate({
-            name : 'WelcomePage'
+            name: 'WelcomePage'
         })
     }
 
@@ -105,12 +105,12 @@ export default class DrawerContentPage extends Component {
             //alert(value)
             this.setState({ iconName: 'fingerprint-off' })
             this.setState({ fingerPrintText: 'Enable Fingerprint unlock' })
-            AsyncStorage.setItem('bool','false')
-            
+            AsyncStorage.setItem('bool', 'false')
+
         } else if (value === true) {
             this.setState({ iconName: 'fingerprint' })
             this.setState({ fingerPrintText: 'Disable Fingerprint unlock' })
-            AsyncStorage.setItem('bool','true')
+            AsyncStorage.setItem('bool', 'true')
         }
 
     }
@@ -125,14 +125,14 @@ export default class DrawerContentPage extends Component {
                 <DrawerContentScrollView {...props}>
                     <View>
                         <Title style={{ marginLeft: widthToDp("6%") }}>{this.state.username}</Title>
-                        <View style={{flex: 1, height: 1, backgroundColor:'#f4f4f4',marginTop: heightToDp("1%")}} />
+                        <View style={{ flex: 1, height: 1, backgroundColor: '#f4f4f4', marginTop: heightToDp("1%") }} />
                         <Caption style={{ marginLeft: widthToDp("6%") }}>{this.state.email}</Caption>
 
-                        <View style={{flex: 1, height: 1, backgroundColor:'#f4f4f4',marginTop: heightToDp("1%")}} />
+                        <View style={{ flex: 1, height: 1, backgroundColor: '#f4f4f4', marginTop: heightToDp("1%") }} />
 
 
                         <Drawer.Section style={styles.drawerSection}>
-                            
+
                             <View style={{ flexDirection: 'row' }}>
                                 <Finger
                                     name={this.state.iconName}
@@ -146,14 +146,14 @@ export default class DrawerContentPage extends Component {
                                 />
                             </View>
 
-                            <View style={{flex: 1, height: 1, backgroundColor:'#f4f4f4',marginTop: heightToDp("1%")}} />
+                            <View style={{ flex: 1, height: 1, backgroundColor: '#f4f4f4', marginTop: heightToDp("1%") }} />
                             <Drawer.Item
                                 icon={({ color, size }) => (
                                     <Icon
                                         name='logout'
                                         color={color}
                                         size={23}
-                                        style={{marginLeft:widthToDp("2%")}}
+                                        style={{ marginLeft: widthToDp("2%") }}
                                     />
                                 )}
                                 label="Sign Out"
@@ -161,6 +161,17 @@ export default class DrawerContentPage extends Component {
                             />
 
                         </Drawer.Section>
+
+                        <View style={{marginTop: heightToDp("72%")}}>
+                            <View style={{ flex: 1, height: 1, backgroundColor: '#f4f4f4', marginBottom: heightToDp("1%") }} />
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ marginLeft: widthToDp("5.5%") }}>Ver: 1.0</Text>
+                                <Text style={{ marginLeft: widthToDp("20%") }}>Powered by </Text>
+                                <PoweredBy />
+
+                            </View>
+                        </View>
+
                     </View>
                 </DrawerContentScrollView>
                 <Drawer.Section style={styles.bottomDrawerSection}>
@@ -173,13 +184,8 @@ export default class DrawerContentPage extends Component {
                         />
                     )}
                     label="Sign Out"
-                /> */}
-                    <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ marginLeft: widthToDp("5.5%") }}>Ver: 1.0</Text>
-                        <Text style={{marginLeft: widthToDp("20%")}}>Powered by </Text>
-                        <PoweredBy />
-                        
-                    </View>
+                    /> */}
+
                 </Drawer.Section>
             </View>
 
@@ -212,7 +218,7 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     bottomDrawerSection: {
-        marginBottom: 30,
+        marginBottom: 0,
         marginLeft: 10
     },
     preference: {

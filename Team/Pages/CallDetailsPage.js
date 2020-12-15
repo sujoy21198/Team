@@ -140,7 +140,7 @@ export default class CallDetailsPage extends Component {
                         <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  widthToDp("2%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.2%") }}>{details.call_details}</Text>
                     </View>
 
-                    <View style={{ flexDirection: 'row', marginTop:  heightToDp("1%") }}>
+                    {/* <View style={{ flexDirection: 'row', marginTop:  heightToDp("1%") }}>
                         <View>
                             <View style={styles.accountTextView}>
                                 <Text style={styles.accountText}>Department</Text>
@@ -160,7 +160,7 @@ export default class CallDetailsPage extends Component {
                                 <Text style={{ marginLeft:  widthToDp("2%"), marginTop:  heightToDp("1%"), fontFamily: 'Poppins-Regular.ttf', fontSize:  widthToDp("4.1%") }}>A k Ghosh</Text>
                             </View>
                         </View>
-                    </View>
+                    </View> */}
 
 
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("1%") }}>
@@ -323,9 +323,9 @@ const styles = StyleSheet.create({
         borderColor: BaseColor.BorderColor,
         borderWidth: 2,
         width: widthToDp("40%"),
-        marginTop:  heightToDp("2%"),
+        marginTop:  heightToDp("1.5%"),
         borderRadius: 5,
-        height:  heightToDp("5%")
+        height:  heightToDp("5.8%")
     },
     calldetailsBox: {
         marginLeft: widthToDp("5%"),

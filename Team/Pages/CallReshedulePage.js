@@ -181,7 +181,7 @@ export default class CallReshedulePage extends Component {
                 <View style={styles.accountTextBox}>
                     <View style={{ flexDirection: 'row' }}>
                         {/* <Text style={{ marginLeft: 10, marginTop: 10 }}>Spare parts changed</Text> */}
-                        <View style={{ width: 280 }}>
+                        <View style={{ width: widthToDp("68%") }}>
                             <DatePicker
                                 animationType={"fade"}
                                 androidMode={"default"}
@@ -207,8 +207,8 @@ export default class CallReshedulePage extends Component {
                 <View style={styles.timeBox}>
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => this.setState({ show: true })}>
-                            <View style={{ width: 280 }}>
-                                <Text style={{ marginLeft: 10, marginTop: 10 }}>{this.state.hour}:{this.state.min}</Text>
+                            <View style={{ width: widthToDp("68%") }}>
+                                <Text style={{ marginLeft: widthToDp("1%"), marginTop: heightToDp("1%") }}>{this.state.hour}:{this.state.min}</Text>
                                 <Dialog.Container visible={this.state.show} style={{ borderRadius: 10 }}>
                                     <Dialog.Title>Time in 24 hrs</Dialog.Title>
                                     <View style={{ flexDirection: 'row' }}>
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
         marginLeft: widthToDp("5%")
     },
     itemCountText: {
-        marginLeft: widthToDp("3%"),
+        marginLeft: widthToDp("2%"),
         marginTop:  heightToDp("0.7%"),
     },
     timeText: {
