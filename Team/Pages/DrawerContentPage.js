@@ -70,10 +70,12 @@ export default class DrawerContentPage extends Component {
     }
 
     signOut = async () => {
+        // this.props.navigation.navigate('DrawerClose')
         await AsyncStorage.removeItem('username');
 
-        this.props.navigation.navigate({
-            name: 'WelcomePage'
+        this.props.navigation.reset({
+            index:0,
+            routes:[{name: 'WelcomePage'}]
         })
     }
 

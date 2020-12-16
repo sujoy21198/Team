@@ -3,7 +3,7 @@ import {
     StyleSheet, View, Alert, TextInput,
     SafeAreaView, StatusBar, TouchableOpacity, Keyboard
 } from 'react-native';
-import { Text, Item } from 'native-base';
+import { Text, Item,Toast } from 'native-base';
 import OTPTextView from 'react-native-otp-textinput';
 import BaseColor from '../Core/BaseTheme';
 import CustomIndicator from '../Core/CustomIndicator';
@@ -47,6 +47,7 @@ export default class OtpPage extends Component {
         var flag = false;
         var redirect = false;
         var finger = false;
+        var username;
         var otp = this.state.otp;
         if (!otp || otp.length != 4) {
             alert("plz enter 4 digit code")
@@ -61,6 +62,7 @@ export default class OtpPage extends Component {
             console.log(JSON.stringify(response.data));
             flag = true;
             redirect = true;
+            username = response.data.username;
             AsyncStorage.setItem("username", response.data.username);
             AsyncStorage.setItem("useremailID", response.data.useremailID);
             AsyncStorage.setItem('login_userID', JSON.stringify(response.data.login_userID))
@@ -72,11 +74,20 @@ export default class OtpPage extends Component {
 
         if (redirect === true) {
             //alert(redirect)
-            this.props.navigation.navigate({
-                name: 'HomePage',
+            this.props.navigation.reset({
+                index:0,
+                routes:[{name: 'HomePage',
                 params: {
                     phone: this.state.phone
                 }
+            }],
+                
+            })
+            Toast.show({
+                text:'Welcome '+username,
+                duration:3000,
+                buttonText:'Okay',
+                type:'success'
             })
         }
 

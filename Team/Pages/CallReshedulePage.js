@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { Button, Text, DatePicker, Input, Picker } from 'native-base';
+import { Button, Text, DatePicker, Input, Picker,Toast } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Clock from 'react-native-vector-icons/SimpleLineIcons';
 import Arrow from 'react-native-vector-icons/SimpleLineIcons';
 import axios from 'axios';
 import Dialog from "react-native-dialog";
-import {heightToDp,widthToDp} from '../Responsive'
+import { heightToDp, widthToDp } from '../Responsive'
 
 
 
@@ -37,6 +37,8 @@ export default class CallReshedulePage extends Component {
         this.state.number_of_today_call = this.props.route.params.number_of_today_call;
         this.state.number_of_pending_call = this.props.route.params.number_of_pending_call;
         this.state.number_of_open_call = this.props.route.params.number_of_open_call;
+        this.input_1 = React.createRef();
+        this.input_2 = React.createRef();
     }
 
     componentDidMount() {
@@ -130,6 +132,32 @@ export default class CallReshedulePage extends Component {
 
     submit = async () => {
 
+        if(this.state.datePicker === ''){
+            //alert("Please enter date")
+            Toast.show({
+                text:'Please enter date',
+                duration:3000,
+                buttonText:'Okay',
+                type:'danger'
+            })
+        }else if(this.state.hour === '' || this.state.min === ''){
+            //alert("please enter valid time")
+            Toast.show({
+                text:'please enter valid time',
+                duration:3000,
+                buttonText:'Okay',
+                type:'danger'
+            })
+        }else if(this.state.reason === ''){
+            //alert('please enter valid reason')
+            Toast.show({
+                text:'please enter valid reason',
+                duration:3000,
+                buttonText:'Okay',
+                type:'danger'
+            })
+        }
+
         var redirect = false;
 
         await axios.post("http://teamassist.websteptech.co.uk/api/reshedulecall	", {
@@ -140,6 +168,12 @@ export default class CallReshedulePage extends Component {
         }).then(function (response) {
             console.log(response.data)
             redirect = true;
+            Toast.show({
+                text:'Call Resheduled ',
+                duration:3000,
+                buttonText:'Okay',
+                type:'success'
+            })
         }).catch(function (error) {
             console.log(error)
         })
@@ -154,6 +188,16 @@ export default class CallReshedulePage extends Component {
     picker = (value) => {
         alert(value)
     }
+
+    // refTry = (text) =>{
+        
+    //     if(text.length<= 2){
+    //         this.setState({ hour: text })
+    //     }
+    //     if(text.length === 2 ){
+    //         this.input_1.current.focus();
+    //     }
+    // }
 
     render() {
         return (
@@ -212,16 +256,22 @@ export default class CallReshedulePage extends Component {
                                 <Dialog.Container visible={this.state.show} style={{ borderRadius: 10 }}>
                                     <Dialog.Title>Time in 24 hrs</Dialog.Title>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Dialog.Input placeholder='hour'
+                                        <Dialog.Input
+                                            placeholder='hour'
+                                            ref={this.input_1}
                                             style={{ color: '#000' }}
                                             maxLength={2}
                                             onChangeText={(text) => { this.setState({ hour: text }) }}
+                                            keyboardType='numeric'
                                         ></Dialog.Input>
                                         <Dialog.Description>:</Dialog.Description>
-                                        <Dialog.Input placeholder='minutes'
+                                        <Dialog.Input
+                                            placeholder='minutes'
+                                            ref={this.input_2}
                                             style={{ color: '#000' }}
                                             maxLength={2}
                                             onChangeText={(text) => { this.setState({ min: text }) }}
+                                            keyboardType='numeric'
                                         ></Dialog.Input>
                                     </View>
                                     <Dialog.Button label='OK' onPress={() => this.setState({ show: false })} />
@@ -327,7 +377,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         flexDirection: 'row',
         marginLeft: widthToDp("3%"),
-        marginTop:  heightToDp("2%")
+        marginTop: heightToDp("2%")
     },
     timeandcountView: {
         flexDirection: 'row',
@@ -336,7 +386,7 @@ const styles = StyleSheet.create({
     },
     itemCountText: {
         marginLeft: widthToDp("2%"),
-        marginTop:  heightToDp("0.7%"),
+        marginTop: heightToDp("0.7%"),
     },
     timeText: {
         marginLeft: widthToDp("2%"),
