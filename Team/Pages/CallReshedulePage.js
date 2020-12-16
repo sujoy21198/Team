@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { Button, Text, DatePicker, Input, Picker,Toast } from 'native-base';
+import { Button, Text, DatePicker, Input, Picker, Toast } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Clock from 'react-native-vector-icons/SimpleLineIcons';
@@ -37,8 +37,6 @@ export default class CallReshedulePage extends Component {
         this.state.number_of_today_call = this.props.route.params.number_of_today_call;
         this.state.number_of_pending_call = this.props.route.params.number_of_pending_call;
         this.state.number_of_open_call = this.props.route.params.number_of_open_call;
-        this.input_1 = React.createRef();
-        this.input_2 = React.createRef();
     }
 
     componentDidMount() {
@@ -132,29 +130,29 @@ export default class CallReshedulePage extends Component {
 
     submit = async () => {
 
-        if(this.state.datePicker === ''){
+        if (this.state.datePicker === '') {
             //alert("Please enter date")
             Toast.show({
-                text:'Please enter date',
-                duration:3000,
-                buttonText:'Okay',
-                type:'danger'
+                text:  '      Please enter date',
+                duration: 3000,
+                
+                type: 'danger'
             })
-        }else if(this.state.hour === '' || this.state.min === ''){
+        } else if (this.state.hour === '' || this.state.min === '') {
             //alert("please enter valid time")
             Toast.show({
-                text:'please enter valid time',
-                duration:3000,
-                buttonText:'Okay',
-                type:'danger'
+                text: '     please enter valid time',
+                duration: 3000,
+                
+                type: 'danger'
             })
-        }else if(this.state.reason === ''){
+        } else if (this.state.reason === '') {
             //alert('please enter valid reason')
             Toast.show({
-                text:'please enter valid reason',
-                duration:3000,
-                buttonText:'Okay',
-                type:'danger'
+                text: '      please enter valid reason',
+                duration: 3000,
+                
+                type: 'danger'
             })
         }
 
@@ -169,10 +167,10 @@ export default class CallReshedulePage extends Component {
             console.log(response.data)
             redirect = true;
             Toast.show({
-                text:'Call Resheduled ',
-                duration:3000,
-                buttonText:'Okay',
-                type:'success'
+                text: 'Call Resheduled ',
+                duration: 3000,
+                
+                type: 'success'
             })
         }).catch(function (error) {
             console.log(error)
@@ -190,7 +188,7 @@ export default class CallReshedulePage extends Component {
     }
 
     // refTry = (text) =>{
-        
+
     //     if(text.length<= 2){
     //         this.setState({ hour: text })
     //     }
@@ -249,8 +247,9 @@ export default class CallReshedulePage extends Component {
                 </View>
 
                 <View style={styles.timeBox}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => this.setState({ show: true })}>
+                    <TouchableOpacity onPress={() => this.setState({ show: true })}>
+                        <View style={{ flexDirection: 'row' }}>
+
                             <View style={{ width: widthToDp("68%") }}>
                                 <Text style={{ marginLeft: widthToDp("1%"), marginTop: heightToDp("1%") }}>{this.state.hour}:{this.state.min}</Text>
                                 <Dialog.Container visible={this.state.show} style={{ borderRadius: 10 }}>
@@ -258,7 +257,6 @@ export default class CallReshedulePage extends Component {
                                     <View style={{ flexDirection: 'row' }}>
                                         <Dialog.Input
                                             placeholder='hour'
-                                            ref={this.input_1}
                                             style={{ color: '#000' }}
                                             maxLength={2}
                                             onChangeText={(text) => { this.setState({ hour: text }) }}
@@ -267,7 +265,6 @@ export default class CallReshedulePage extends Component {
                                         <Dialog.Description>:</Dialog.Description>
                                         <Dialog.Input
                                             placeholder='minutes'
-                                            ref={this.input_2}
                                             style={{ color: '#000' }}
                                             maxLength={2}
                                             onChangeText={(text) => { this.setState({ min: text }) }}
@@ -278,20 +275,21 @@ export default class CallReshedulePage extends Component {
                                     <Dialog.Button label='Cancel' onPress={() => this.setState({ show: false })} />
                                 </Dialog.Container>
                             </View>
-                        </TouchableOpacity>
 
-                        {/* <Input
+
+                            {/* <Input
                             placeholder='24 hr clock time'
                             onChangeText={(text)=>{this.setState({time: text})}}
                             /> */}
 
-                        <Icon
-                            name='clock'
-                            size={30}
-                            style={{ marginLeft: widthToDp("6%"), marginTop: heightToDp("1.5%") }}
-                            color={BaseColor.CommonTextColor}
-                        />
-                    </View>
+                            <Icon
+                                name='clock'
+                                size={30}
+                                style={{ marginLeft: widthToDp("6%"), marginTop: heightToDp("1.5%") }}
+                                color={BaseColor.CommonTextColor}
+                            />
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.accountTextView}>

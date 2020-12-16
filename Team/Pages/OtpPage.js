@@ -3,13 +3,13 @@ import {
     StyleSheet, View, Alert, TextInput,
     SafeAreaView, StatusBar, TouchableOpacity, Keyboard
 } from 'react-native';
-import { Text, Item,Toast } from 'native-base';
+import { Text, Item, Toast } from 'native-base';
 import OTPTextView from 'react-native-otp-textinput';
 import BaseColor from '../Core/BaseTheme';
 import CustomIndicator from '../Core/CustomIndicator';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {heightToDp,widthToDp} from '../Responsive'
+import { heightToDp, widthToDp } from '../Responsive'
 
 
 export default class OtpPage extends Component {
@@ -50,7 +50,13 @@ export default class OtpPage extends Component {
         var username;
         var otp = this.state.otp;
         if (!otp || otp.length != 4) {
-            alert("plz enter 4 digit code")
+            //alert("plz enter 4 digit code")
+            Toast.show({
+                text: '     plz enter 4 digit code',
+                duration: 3000,
+
+                type: 'danger'
+            })
             this.setState({ isLoading: false })
             return;
         }
@@ -75,19 +81,20 @@ export default class OtpPage extends Component {
         if (redirect === true) {
             //alert(redirect)
             this.props.navigation.reset({
-                index:0,
-                routes:[{name: 'HomePage',
-                params: {
-                    phone: this.state.phone
-                }
-            }],
-                
+                index: 0,
+                routes: [{
+                    name: 'HomePage',
+                    params: {
+                        phone: this.state.phone
+                    }
+                }],
+
             })
             Toast.show({
-                text:'Welcome '+username,
-                duration:3000,
-                buttonText:'Okay',
-                type:'success'
+                text: 'Welcome ' + username,
+                duration: 3000,
+                buttonText: 'Okay',
+                type: 'success'
             })
         }
 
@@ -183,7 +190,7 @@ const styles = StyleSheet.create({
     resendText: {
         color: "#89919d",
         marginTop: heightToDp("3.5%"),
-        fontSize:  widthToDp("3%"),
+        fontSize: widthToDp("3%"),
         marginLeft: widthToDp("5%")
     },
     whiteText: {

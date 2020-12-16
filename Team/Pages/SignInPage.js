@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { SafeAreaView, View, StyleSheet, StatusBar, TouchableOpacity, Keyboard, ActivityIndicator } from 'react-native';
-import { Text, Input, Item, Button } from 'native-base';
+import { Text, Input, Item, Button, Toast } from 'native-base';
 import BaseColor from '../Core/BaseTheme';
 import CustomIndicator from '../Core/CustomIndicator';
 import axios from 'axios';
-import {heightToDp,widthToDp} from '../Responsive'
+import { heightToDp, widthToDp } from '../Responsive'
 
 
 export default class SignInPage extends Component {
@@ -26,7 +26,13 @@ export default class SignInPage extends Component {
         this.setState({ isLoading: true })
         var phone = this.state.phone;
         if (!phone || phone.length != 10) {
-            alert("please enter a valid phone number")
+            //alert("please enter a valid phone number")
+            Toast.show({
+                text: '     please enter a valid phone number',
+                duration: 3000,
+
+                type: 'danger'
+            })
             this.setState({ isLoading: false })
             return;
         }
@@ -100,8 +106,8 @@ const styles = StyleSheet.create({
         backgroundColor: BaseColor.BackgroundColor,
     },
     textArea: {
-        marginTop:  heightToDp("30%"),
-        marginLeft:  widthToDp("5%")
+        marginTop: heightToDp("30%"),
+        marginLeft: widthToDp("5%")
     },
     textStyle: {
         fontFamily: 'Poppins-Regular',
