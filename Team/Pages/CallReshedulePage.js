@@ -7,7 +7,8 @@ import Clock from 'react-native-vector-icons/SimpleLineIcons';
 import Arrow from 'react-native-vector-icons/SimpleLineIcons';
 import axios from 'axios';
 import Dialog from "react-native-dialog";
-import { heightToDp, widthToDp } from '../Responsive'
+import { heightToDp, widthToDp } from '../Responsive';
+import TimePicker from "react-native-24h-timepicker";
 
 
 
@@ -30,7 +31,8 @@ export default class CallReshedulePage extends Component {
             reason: '',
             show: false,
             hour: '',
-            min: ''
+            min: '',
+            time: ''
 
         }
         this.state.call_log_id = this.props.route.params.call_log_id;
@@ -133,9 +135,9 @@ export default class CallReshedulePage extends Component {
         if (this.state.datePicker === '') {
             //alert("Please enter date")
             Toast.show({
-                text:  '      Please enter date',
+                text: '      Please enter date',
                 duration: 3000,
-                
+
                 type: 'danger'
             })
         } else if (this.state.hour === '' || this.state.min === '') {
@@ -143,7 +145,7 @@ export default class CallReshedulePage extends Component {
             Toast.show({
                 text: '     please enter valid time',
                 duration: 3000,
-                
+
                 type: 'danger'
             })
         } else if (this.state.reason === '') {
@@ -151,7 +153,7 @@ export default class CallReshedulePage extends Component {
             Toast.show({
                 text: '      please enter valid reason',
                 duration: 3000,
-                
+
                 type: 'danger'
             })
         }
@@ -161,7 +163,8 @@ export default class CallReshedulePage extends Component {
         await axios.post("http://teamassist.websteptech.co.uk/api/reshedulecall	", {
             call_log_id: this.state.call_log_id,
             reshedule_date: this.state.datePicker,
-            reshedule_time: this.state.hour + ":" + this.state.min,
+            //reshedule_time: this.state.hour + ":" + this.state.min,
+            reshedule_time: this.state.time,
             reshedule_cause: this.state.reason
         }).then(function (response) {
             console.log(response.data)
@@ -169,7 +172,7 @@ export default class CallReshedulePage extends Component {
             Toast.show({
                 text: 'Call Resheduled ',
                 duration: 3000,
-                
+
                 type: 'success'
             })
         }).catch(function (error) {
@@ -197,6 +200,15 @@ export default class CallReshedulePage extends Component {
     //     }
     // }
 
+
+    onCancel() {
+        this.TimePicker.close();
+    }
+
+    onConfirm(hour, minute) {
+        this.setState({ time: `${hour}:${minute}` });
+        this.TimePicker.close();
+    }
     render() {
         return (
             <SafeAreaView>
@@ -247,12 +259,12 @@ export default class CallReshedulePage extends Component {
                 </View>
 
                 <View style={styles.timeBox}>
-                    <TouchableOpacity onPress={() => this.setState({ show: true })}>
+                    <TouchableOpacity onPress={() => this.TimePicker.open()}>
                         <View style={{ flexDirection: 'row' }}>
 
                             <View style={{ width: widthToDp("68%") }}>
-                                <Text style={{ marginLeft: widthToDp("1%"), marginTop: heightToDp("1%") }}>{this.state.hour}:{this.state.min}</Text>
-                                <Dialog.Container visible={this.state.show} style={{ borderRadius: 10 }}>
+                                <Text style={{ marginLeft: widthToDp("1%"), marginTop: heightToDp("1%") }}>{this.state.time}</Text>
+                                {/* <Dialog.Container visible={this.state.show} style={{ borderRadius: 10 }}>
                                     <Dialog.Title>Time in 24 hrs</Dialog.Title>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Dialog.Input
@@ -273,7 +285,16 @@ export default class CallReshedulePage extends Component {
                                     </View>
                                     <Dialog.Button label='OK' onPress={() => this.setState({ show: false })} />
                                     <Dialog.Button label='Cancel' onPress={() => this.setState({ show: false })} />
-                                </Dialog.Container>
+                                </Dialog.Container> */}
+                                <TimePicker
+                                    ref={ref => {
+                                        this.TimePicker = ref;
+                                    }}
+                                    minuteUnit=' mm'
+                                    onCancel={() => this.onCancel()}
+                                    onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
+
+                                />
                             </View>
 
 
