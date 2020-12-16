@@ -15,7 +15,8 @@ import PoweredBy from '../assets/PoweredBy';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BaseColor from '../Core/BaseTheme';
 import FingerprintScanner from 'react-native-fingerprint-scanner';
-import { heightToDp, widthToDp } from '../Responsive'
+import { heightToDp, widthToDp } from '../Responsive';
+import {drawer} from './DrawerControlPage';
 
 
 
@@ -70,6 +71,7 @@ export default class DrawerContentPage extends Component {
     }
 
     signOut = async () => {
+        drawer(this.props.navigation);
         // this.props.navigation.navigate('DrawerClose')
         await AsyncStorage.removeItem('username');
 
